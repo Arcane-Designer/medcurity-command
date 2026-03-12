@@ -203,12 +203,49 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .pb-card .pb-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
 .pb-card .pb-row:last-child{border-bottom:none}
 .pb-card .pb-row .k{color:var(--text2)}.pb-card .pb-row .v{color:#fff;font-weight:600;text-align:right;max-width:60%;word-break:break-word}
-.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.persona-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;transition:all .3s}
-.persona-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(220,38,38,.1)}
-.persona-card h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
-.persona-card .p-role{font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:700}
-.persona-card p{font-size:11px;color:var(--text2);line-height:1.6}
+.persona-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:16px}
+.persona-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.persona-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(220,38,38,.15);border-color:var(--border2)}
+.persona-card.active{border-color:var(--red);box-shadow:0 0 20px rgba(220,38,38,.2)}
+.persona-card .p-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.persona-card h4{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px}
+.persona-card .p-role{font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700}
+.persona-card .p-tag{font-size:9px;padding:2px 7px;border-radius:6px;font-weight:600;display:inline-block;margin-bottom:6px}
+.persona-card .p-tag.champion{background:rgba(34,197,94,.12);color:var(--green)}
+.persona-card .p-tag.evaluator{background:rgba(59,130,246,.12);color:var(--blue)}
+.persona-card .p-tag.influencer{background:rgba(245,158,11,.12);color:var(--yellow)}
+.persona-card .p-tag.blocker{background:rgba(220,38,38,.12);color:var(--red)}
+.persona-card .p-tag.user{background:rgba(130,87,229,.12);color:var(--purple)}
+.persona-card p{font-size:10px;color:var(--text2);line-height:1.5}
+.persona-card .expand-hint{font-size:9px;color:var(--text3);margin-top:6px;text-align:center}
+.persona-detail{display:none;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-top:20px;animation:slideIn .4s ease}
+.persona-detail.open{display:block}
+.persona-detail .pd-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.persona-detail .pd-header h3{font-size:20px;font-weight:800;color:#fff}
+.persona-detail .pd-header .pd-subtitle{font-size:12px;color:var(--text2);margin-top:4px}
+.persona-detail .pd-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.persona-detail .pd-tab{padding:8px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);border:1px solid var(--border);color:var(--text2);transition:all .2s}
+.persona-detail .pd-tab:hover{border-color:var(--border2);color:var(--text)}
+.persona-detail .pd-tab.active{background:rgba(220,38,38,.1);border-color:var(--red);color:var(--red)}
+.persona-detail .pd-content{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px}
+.persona-detail .pd-content h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin:16px 0 8px}
+.persona-detail .pd-content h4:first-child{margin-top:0}
+.persona-detail .pd-content p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:6px}
+.persona-detail .pd-content strong{color:#fff}
+.persona-detail .pd-content .hl-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.persona-detail .pd-content .hl-box.green{border-color:rgba(34,197,94,.3)}
+.persona-detail .pd-content .hl-box.red{border-color:rgba(220,38,38,.3)}
+.persona-detail .pd-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* Win Probability Meter */
+.win-meter{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin:8px 0}
+.win-meter .fill{height:100%;border-radius:3px;transition:width .6s ease}
+/* Buying Committee Map */
+.bc-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:12px 0}
+.bc-node{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;font-size:10px;transition:all .2s}
+.bc-node:hover{border-color:var(--red)}
+.bc-node .bc-emoji{font-size:16px;margin-bottom:4px}
+.bc-node .bc-title{font-weight:700;color:#fff;font-size:10px}
+.bc-node .bc-role{color:var(--text3);font-size:9px;margin-top:2px}
 
 /* Pitch Box */
 .pitch-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;transition:all .3s}
@@ -237,7 +274,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   .dp-grid{grid-template-columns:1fr}
   .two-col-feed{grid-template-columns:1fr}
   .playbook-grid{grid-template-columns:1fr}
-  .persona-grid{grid-template-columns:repeat(2,1fr)}
+  .persona-grid{grid-template-columns:repeat(3,1fr)}
+  .persona-detail .pd-two-col{grid-template-columns:1fr}
   .comp-matrix{font-size:11px}
   .comp-matrix th,.comp-matrix td{padding:10px}
 }
@@ -255,7 +293,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   .feed-controls{flex-direction:column}
   .search-bar{min-width:100%}
   .scroll-to-top{width:40px;height:40px;bottom:20px;right:20px;font-size:16px}
-  .persona-grid{grid-template-columns:1fr}
+  .persona-grid{grid-template-columns:repeat(2,1fr)}
   .breadcrumb-nav{flex-wrap:wrap}
 }
 
@@ -301,8 +339,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <a class="nav-item" data-tab="playbook" onclick="switchTab(event)"><div class="dot" style="background:var(--purple)"></div>Playbook</a>
   </div>
   <div class="sidebar-footer">
-    Next scan: <span class="update-time">Tue 10:00 AM</span><br>
-    <div class="last-scan-badge green" id="last-scan-badge">✓ Updated 18 hours ago</div>
+    Next scan: <span class="update-time">Tue 7:00 AM</span><br>
+    Last updated: <span class="update-time" id="last-updated-date"></span><br>
+    <div class="last-scan-badge green" id="last-scan-badge">✓ v3 — 10 Full Personas</div>
     <a class="help-link" onclick="showHelp()" href="javascript:void(0)">Need help?</a>
   </div>
 </nav>
@@ -537,7 +576,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <button class="filter-btn" data-intent-filter="educational" onclick="filterGapTable(event)">Educational</button>
   </div>
   <table class="gap-table" id="gap-table">
-    <tr><th>Status</th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>
+    <tr><th>Status</th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Way It Matters</th></tr>
   </table>
 </div>
 
@@ -576,25 +615,49 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="pb-row"><span class="k">Why they fit</span><span class="v">Need HIPAA to win/retain healthcare clients</span></div>
       <div class="pb-row"><span class="k">Watch out</span><span class="v">May also need SOC 2 (Vanta/Drata territory)</span></div>
     </div>
+    <div class="pb-card">
+      <h3>Tier 2: Large Health Systems</h3>
+      <div class="pb-sub">Secondary ICP — Long Cycle</div>
+      <div class="pb-row"><span class="k">Type</span><span class="v">Regional hospital systems, IDNs</span></div>
+      <div class="pb-row"><span class="k">Size</span><span class="v">500-5,000+ employees</span></div>
+      <div class="pb-row"><span class="k">Why they fit</span><span class="v">Dissatisfied with Intraprise post-acquisition</span></div>
+      <div class="pb-row"><span class="k">Watch out</span><span class="v">Long sales cycles, may need Dynamic Template features</span></div>
+    </div>
   </div>
 
-  <div class="section-hdr">Buyer Personas</div>
-  <div class="persona-grid">
-    <div class="persona-card">
-      <h4>Compliance Officer</h4>
-      <div class="p-role">Decision-Maker</div>
-      <p>Owns HIPAA program. Measured on audit preparedness and breach prevention. Budget holder. Cares about: expert guidance, audit defensibility, ease of use.</p>
+  <div class="section-hdr">Buyer Personas <span style="font-size:10px;font-weight:400;color:var(--text3);text-transform:none;letter-spacing:0">— Click any persona to explore full profile</span></div>
+  <div class="persona-grid" id="persona-grid"></div>
+  <div id="persona-detail"></div>
+
+  <div class="section-hdr">Buying Committee Map</div>
+  <div id="buying-committee-section" style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px">
+    <p style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6">Healthcare compliance purchases are rarely made by one person. Understanding how personas interact in different org sizes helps you build consensus.</p>
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="filter-btn active" onclick="showBuyingMap('small',this)">Small Practice (5-50)</button>
+      <button class="filter-btn" onclick="showBuyingMap('mid',this)">Mid-Size (100-500)</button>
+      <button class="filter-btn" onclick="showBuyingMap('large',this)">Large System (1,000+)</button>
     </div>
-    <div class="persona-card">
-      <h4>IT Director</h4>
-      <div class="p-role">Technical Evaluator</div>
-      <p>Responsible for infrastructure security. Evaluates integrations and API support. Cares about: NVA depth, ease of deployment, technical documentation.</p>
+    <div id="buying-map-content" style="font-size:12px;color:var(--text2);line-height:1.7"></div>
+  </div>
+
+  <div class="section-hdr">Deal Qualification Scorecard</div>
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px">
+    <p style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6">Quick-score a prospect to assess deal viability. Answer each question, then see your composite score.</p>
+    <div id="scorecard-questions"></div>
+    <div style="margin-top:20px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;text-align:center">
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Deal Score</div>
+      <div id="deal-score" style="font-size:36px;font-weight:900;color:var(--text3)">—</div>
+      <div id="deal-verdict" style="font-size:12px;color:var(--text2);margin-top:8px"></div>
     </div>
-    <div class="persona-card">
-      <h4>Practice Manager / Administrator</h4>
-      <div class="p-role">Day-to-Day User</div>
-      <p>Coordinates training, manages vendor relationships, tracks BAAs. Cares about: intuitive interface, staff adoption, reporting capabilities.</p>
-    </div>
+  </div>
+
+  <div class="section-hdr">Conversation Starters by Persona</div>
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px">
+    <p style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6">Tailor your opening line based on who you're talking to. Select a persona to see context-specific openers.</p>
+    <select id="convo-persona-select" onchange="showConvoStarters()" style="width:100%;background:var(--bg);border:1px solid var(--border);color:#fff;padding:10px 14px;border-radius:8px;font-family:inherit;font-size:13px;margin-bottom:12px;outline:none">
+      <option value="">Choose a persona...</option>
+    </select>
+    <div id="convo-starters-output" style="font-size:12px;color:var(--text2);line-height:1.7"></div>
   </div>
 </div>
 
@@ -671,15 +734,15 @@ const COMMAND_DATA = {
     {name:"True Dental Care for Kids & Adults",loc:"Pennsylvania",date:"Apr 2025",affected:"17,640",type:"Ransomware",detail:"Hackers encrypted files and exfiltrated patient data. Practice recovered from backups without paying ransom.",action:"Dental practice. Post-breach they need ongoing compliance. SPSRA + Training is the pitch.",sev:"warm"},
     {name:"Chord Specialty Dental Partners",loc:"Multi-state (TN, IN, DE, NJ, PA, VA)",date:"Mar 2025",affected:"173,430",type:"Email compromise",detail:"Unauthorized email access Aug-Sept 2024. Supports 60+ dental practices. SSNs, bank info, medical info exposed.",action:"Dental management group. Large target. 60+ practices = potential for both core SRA and SPSRA across locations.",sev:"warm"},
     {name:"Western Montana Mental Health Center",loc:"Montana (15 locations)",date:"Jul 2025",affected:"86,758",type:"Unauthorized access",detail:"Initial breach Sept 2024. Inc Ransom group demanded payment. Medical records, SSNs, financial info exposed.",action:"Mental health, multi-location. Perfect Tier 1A. Emphasize year-round remediation tracking and training.",sev:"warm"},
-    {name:"Community Health Center, Inc.",loc:"Connecticut",date:"Jan 2025",affected:"1,060,000+",type:"Unauthorized intrusion",detail:"Breach began mid-Oct 2024. Attackers had access 2+ months. SSNs, diagnoses, treatment info exposed.",action:"Community health center. Over 1M affected. Enterprise conversation but good case study reference.",sev:"warm"},
-    {name:"DaVita",loc:"Denver, CO",date:"Apr 2025",affected:"2,689,000+",type:"Ransomware (Interlock)",detail:"1,510 GB stolen. Demographics, insurance, clinical info including dialysis lab results. Patient care continued.",action:"Large enterprise. Out of typical ICP but demonstrates market urgency for content/thought leadership.",sev:"cool"}
+    {name:"Community Health Center, Inc.",loc:"Connecticut",date:"Jan 2025",affected:"1,060,936",type:"Unauthorized intrusion",detail:"Breach began mid-Oct 2024. Attackers had access 2+ months. SSNs, diagnoses, treatment info exposed.",action:"Community health center. Over 1M affected. Enterprise conversation but good case study reference.",sev:"warm"},
+    {name:"DaVita",loc:"Denver, CO",date:"Apr 2025",affected:"2,689,826",type:"Ransomware (Interlock)",detail:"1,510 GB stolen. Demographics, insurance, clinical info including dialysis lab results. Patient care continued.",action:"Large enterprise. Out of typical ICP but demonstrates market urgency for content/thought leadership.",sev:"cool"}
   ],
   jobSignals: [
     {org:"GeneDx",role:"Director, Data Privacy Officer",loc:"Remote/Hybrid",detail:"Leading healthcare data privacy program. HIPAA, HITECH, GDPR compliance.",sev:"warm"},
     {org:"GeneDx",role:"Senior Manager, Healthcare Compliance",loc:"Remote/Hybrid",detail:"CLIA, HIPAA, CMS, OIG compliance in laboratory operations.",sev:"warm"},
     {org:"HealthEquity",role:"Director, Privacy Program",loc:"Draper, UT / Irving, TX / Remote",detail:"Operational leader of privacy program.",sev:"warm"},
     {org:"BerryDunn",role:"HIPAA Privacy Officer",loc:"Portland, ME area",detail:"Healthcare consulting firm. Salary: $100K-$125K.",sev:"warm"},
-    {org:"Pacific Clinics",role:"Healthcare Privacy/Compliance (multiple)",loc:"California",detail:"California's largest behavioral/mental health provider. 97+ open positions.",sev:"warm"},
+    {org:"Pacific Clinics",role:"Healthcare Privacy/Compliance (multiple)",loc:"California",detail:"California's largest behavioral/mental health provider. 97+ open positions.",sev:"hot"},
     {org:"World Relief",role:"Healthcare Privacy/Compliance Officer",loc:"Multiple",detail:"International humanitarian org. 49+ job openings.",sev:"warm"}
   ],
   competitorAlerts: [],
@@ -691,6 +754,243 @@ const COMMAND_DATA = {
     "251-500": {medcurity_sra:"$6,600",medcurity_baa:"$1,500",medcurity_training:"$4,000",medcurity_safer:"$400",medcurity_total:"$12,500"},
     "500+": {medcurity_sra:"Contact Medcurity",medcurity_baa:"Contact Medcurity",medcurity_training:"Contact Medcurity",medcurity_safer:"Contact Medcurity",medcurity_total:"Custom"}
   },
+  personas: [
+    {id:"compliance-officer",name:"Compliance Officer",shortName:"Compliance Officer",emoji:"🛡️",role:"Primary Champion",tag:"champion",tagLabel:"Champion",orgSize:"50+ employees (dedicated role)",age:"35-55",
+     titles:"HIPAA Compliance Officer, Privacy Officer, Chief Compliance Officer, Compliance Manager, Compliance Analyst",
+     career:"Enters through healthcare admin, nursing, HIM, or legal. Certifications: CHC, CHPC, CIPP/US.",
+     reports:"Reports to CEO, COO, or General Counsel. Manages 1-5 compliance analysts.",
+     summary:"Owns the HIPAA program. Measured on audit preparedness and breach prevention. Budget holder. The person most likely to champion Medcurity internally.",
+     fears:"Being blamed after a breach, failing an OCR audit, losing professional reputation, having their program dismantled after leadership change.",
+     aspirations:"Building a compliance program so thorough it becomes a competitive advantage. Being recognized as a strategic asset, not just a checkbox.",
+     dayInLife:"Morning: Check HHS breach portal, review vendor risk alerts. Mid-day: Staff training coordination, policy updates. Afternoon: Remediation tracking, vendor BAA management, board report preparation.",
+     triggers:"OCR Phase 3 audits announced, nearby organization breached, new HIPAA rule published, annual SRA due date approaching, leadership change.",
+     objections:[
+       {q:"We already have a compliance program.",a:"Great — how does your current SRA hold up under OCR scrutiny? Is it NIST-aligned with quantitative scoring, or checklist-based?"},
+       {q:"We can't afford another platform.",a:"What's the cost of NOT having OCR-defensible documentation? Average breach: $4.88M. Medcurity SPSRA: $499/year."},
+       {q:"We'll revisit next quarter.",a:"The 2026 HIPAA Security Rule updates take effect soon. Getting ahead of the deadline is more cost-effective than scrambling after."}
+     ],
+     sellChannel:"LinkedIn, email, HCCA events, HIPAA conferences",
+     sellFirstTouch:"Invite to webinar on upcoming regulatory changes or share a compliance assessment checklist.",
+     sellCTA:"Schedule a 30-minute compliance review to see how Medcurity can reduce your SRA timeline by 70%.",
+     sellNurture:"Stage 1: Educational content about regulatory changes. Stage 2: Product comparisons, case studies, ROI data. Stage 3: Demo, trial, internal business case materials.",
+     redFlags:"Goes silent after demo, asks to table until next quarter, delegates to junior person.",
+     championTip:"Provide ready-to-use internal business case materials — ROI calculations, risk quantification, competitor comparisons, and a board-ready one-pager.",
+     convoStarters:["Have you started preparing for the 2026 HIPAA Security Rule updates?","How are you currently documenting your SRA remediation progress for OCR?","I noticed [nearby org] had a breach — are you confident your SRA would hold up under that kind of scrutiny?"]
+    },
+    {id:"practice-manager",name:"Practice Manager",shortName:"Practice Mgr",emoji:"📋",role:"Day-to-Day User",tag:"user",tagLabel:"End User",orgSize:"5-50 employees",age:"30-55 (87% women)",
+     titles:"Practice Manager, Office Manager, Clinic Administrator, Practice Administrator, Medical Office Manager",
+     career:"Many promoted from within — started as receptionist, billing specialist, or MA. Mix of on-the-job experience and formal degrees.",
+     reports:"Reports to physician-owner or managing partner. Manages 3-25 staff.",
+     summary:"The Swiss Army knife of small practices. Handles everything from billing to HR to compliance. HIPAA is one of 50 responsibilities. Needs simple, affordable, complete solutions.",
+     fears:"Breach that shuts down the practice, being fired for compliance failure, spending money on something the doctor won't approve.",
+     aspirations:"Keeping the practice running smoothly. Being trusted by the physician. Having clear answers when compliance questions arise.",
+     dayInLife:"Morning: Staff scheduling, patient calls, billing issues. Mid-day: Vendor calls, supply ordering. Afternoon: Insurance follow-ups. Compliance squeezed in between everything else.",
+     triggers:"Physician asks about HIPAA compliance, staff member mishandles patient info, nearby practice breached, annual insurance renewal questionnaire asks about HIPAA program.",
+     objections:[
+       {q:"The doctor handles compliance.",a:"Is there documented evidence of a thorough risk analysis? OCR doesn't accept 'the doctor handles it' as compliance proof."},
+       {q:"We're too small to be a target.",a:"45% of breaches hit practices with fewer than 50 employees. Small practices are targeted because they have weaker defenses."},
+       {q:"We can't afford $499/year.",a:"That's less than $42/month. Compare that to a breach notification cost alone: $150-200 per affected patient."}
+     ],
+     sellChannel:"Google Ads, MGMA events, email marketing, physician referrals",
+     sellFirstTouch:"Free downloadable resource — 'HIPAA Compliance Checklist for Small Practices' or free SRA readiness assessment.",
+     sellCTA:"Start your free Small Practice SRA assessment today.",
+     sellNurture:"Stage 1: Free resource, 3-email educational sequence. Stage 2: Webinar invite, pricing comparison. Stage 3: Free trial of SPSRA, guided walkthrough.",
+     redFlags:"'I need to ask the doctor' followed by silence. Asks for printed materials. Mentions they already have 'a binder.'",
+     championTip:"Make it easy for them to get physician approval — provide a one-page ROI sheet they can show the doctor in 2 minutes.",
+     convoStarters:["How much time do you spend on HIPAA compliance each week?","When was the last time your practice completed a formal risk assessment?","If OCR called tomorrow, would you feel confident in your documentation?"]
+    },
+    {id:"cio",name:"CIO / CTO",shortName:"CIO/CTO",emoji:"💻",role:"Technical Evaluator",tag:"evaluator",tagLabel:"Evaluator",orgSize:"200+ employees",age:"45-60",
+     titles:"CIO, CTO, VP of IT, Director of Information Systems, Chief Digital Officer",
+     career:"Rose through IT ranks — sysadmin, network engineer, apps analyst. Progressed to IT Manager, Director, VP. Often holds CHCIO or CPHIMS.",
+     reports:"Reports to CEO or COO. Manages IT department of 5-50+ staff.",
+     summary:"Most senior technical leader. Evaluates platform architecture, integration capabilities, and security posture. Cares about technical depth, not compliance jargon.",
+     fears:"Being CIO during a major breach that makes national news. Board losing confidence. Having to explain a breach to patients and media.",
+     aspirations:"Building a modern, secure healthcare technology ecosystem. Being seen as a strategic partner, not just IT support.",
+     dayInLife:"Morning: Security alerts review, vendor meetings. Mid-day: Architecture decisions, project oversight. Afternoon: Budget planning, executive briefings, strategic planning.",
+     triggers:"New EHR implementation, cloud migration, security incident at peer org, board requests cybersecurity briefing.",
+     objections:[
+       {q:"We already have security tools.",a:"Security tools detect threats. Medcurity manages HIPAA compliance — risk analysis, training, vendor management. Different layers of the same problem."},
+       {q:"How does it integrate with our stack?",a:"We integrate where healthcare actually needs it — EHR workflows, security tools, identity systems. Not 375 dev tool integrations you'll never use."},
+       {q:"I need to see the architecture.",a:"Absolutely. Let's do a technical architecture review — we'll show exactly how Medcurity fits into your environment."}
+     ],
+     sellChannel:"LinkedIn, CHIME events, direct email, healthcare IT conferences",
+     sellFirstTouch:"Technical webinar: 'Integrating HIPAA Risk Analysis into Your Security Architecture.' Or share a technical whitepaper.",
+     sellCTA:"Schedule a 45-minute technical architecture review to see how Medcurity integrates with your specific stack.",
+     sellNurture:"Stage 1: Technical content about security and compliance integration. Stage 2: Architecture docs, API documentation, integration case studies. Stage 3: Technical demo with IT team.",
+     redFlags:"Defers to Compliance Officer (may mean IT isn't the champion). Requests extensive technical documentation before any conversation.",
+     championTip:"Provide technical documentation showing integration is feasible and won't burden IT. Show clear ROI in IT time savings.",
+     convoStarters:["How are you currently connecting your security monitoring with your HIPAA compliance program?","Are your SRA and NVA processes integrated, or running in separate silos?","What's your plan for meeting the new 2026 encryption requirements?"]
+    },
+    {id:"ciso",name:"CISO / Security Dir.",shortName:"CISO",emoji:"🔒",role:"Security Gatekeeper",tag:"evaluator",tagLabel:"Evaluator",orgSize:"500+ employees",age:"40-55",
+     titles:"CISO, IT Security Director, VP of Cybersecurity, Information Security Officer",
+     career:"Started as network admin or sysadmin, moved into security through IR, pen testing, or SecOps. Certifications: CISSP, CISM, HCISPP.",
+     reports:"Reports to CIO or directly to CEO. Manages security team of 2-15+.",
+     summary:"Lives in constant threat detection mode. Views HIPAA through a security lens — risk, vulnerabilities, incident response. Skeptical of compliance-only tools that don't address real threats.",
+     fears:"Being CISO during a major breach with law enforcement involvement. Ransomware that shuts down clinical operations and threatens patient safety.",
+     aspirations:"Building a security program that can detect, prevent, and respond to threats before they become breaches. Being respected by both technical and executive peers.",
+     dayInLife:"Morning: Review overnight security alerts, threat intel feeds. Mid-day: Security architecture reviews, vendor assessments. Afternoon: Incident response planning, risk committee meetings.",
+     triggers:"Ransomware attack at peer organization, new vulnerability disclosed affecting healthcare systems, board requests security assessment, insurance renewal requires documentation.",
+     objections:[
+       {q:"We have a SIEM and SOC already.",a:"Great for threat detection. But can your SIEM produce an OCR-defensible SRA? Medcurity bridges the gap between security operations and compliance documentation."},
+       {q:"This looks like a compliance checkbox tool.",a:"Our SRA produces quantitative NIST-aligned risk scores with remediation tracking — it's a risk management tool that also satisfies OCR. Not just checkboxes."},
+       {q:"I need HITRUST, not just HIPAA.",a:"Understood. Our NIST-aligned approach maps directly to HITRUST CSF controls. We can show you the crosswalk."}
+     ],
+     sellChannel:"LinkedIn, healthcare security conferences, direct email, ISC2/ISSA events",
+     sellFirstTouch:"Technical webinar with security credentials or healthcare-specific threat intelligence briefing.",
+     sellCTA:"Schedule a 45-minute technical security review to see how Medcurity integrates with your SIEM and security architecture.",
+     sellNurture:"Stage 1: Healthcare threat intelligence, breach case studies. Stage 2: Technical integration demos, NIST alignment documentation. Stage 3: POC with security team.",
+     redFlags:"Defers to Compliance Officer. Asks for 'simplified' information. Questions NIST methodology.",
+     championTip:"Provide security-focused data showing how Medcurity improves threat detection context. Frame compliance as a security enabler, not overhead.",
+     convoStarters:["How do you currently connect your security monitoring to your HIPAA risk assessment process?","When was the last time you updated your incident response plan for the new breach reporting timelines?","Are you seeing the same pattern we are — ransomware groups specifically targeting healthcare organizations your size?"]
+    },
+    {id:"ceo",name:"CEO / Owner",shortName:"CEO/Owner",emoji:"👔",role:"Final Decision Maker",tag:"blocker",tagLabel:"Decision Maker",orgSize:"All sizes",age:"45-65",
+     titles:"CEO, President, Medical Director/CEO, Executive Director, Managing Partner, Physician-Owner",
+     career:"Physicians who transitioned to administration (MD/MBA), healthcare administrators with MHA, business executives.",
+     reports:"Reports to Board of Directors or is the owner.",
+     summary:"Focused on organizational survival and growth, not compliance details. Needs to understand risk in business terms — financial exposure, reputational damage, operational disruption. Won't evaluate software; will approve/reject the recommendation.",
+     fears:"Organization-threatening breach that makes headlines. Personal liability. Board losing confidence in leadership.",
+     aspirations:"Building a thriving healthcare organization. Being known for clinical excellence AND operational rigor.",
+     dayInLife:"Back-to-back meetings: medical staff, finance, operations, board prep. Compliance is one of dozens of risk categories competing for attention.",
+     triggers:"Breach in the news (especially at similar org), board member asks about HIPAA, insurance renewal with compliance requirements, OCR audit notification.",
+     objections:[
+       {q:"Compliance isn't a priority right now.",a:"Understood — until OCR calls or a breach hits. The average healthcare breach costs $10.9M. Medcurity is insurance that costs less than 0.01% of that."},
+       {q:"What's the ROI?",a:"For SPSRA: $499/year to protect against potential $4.88M breach cost. For mid-market: $5K-$12K/year vs $1.5M-$10M in OCR penalties. 200-2000x ROI."},
+       {q:"Have our compliance person handle it.",a:"Absolutely — that's the right approach. We'll equip them with everything they need and keep you updated with quarterly executive summaries."}
+     ],
+     sellChannel:"Peer referral from another CEO, board member referral, ACHE networking",
+     sellFirstTouch:"Peer introduction from another CEO customer. One-page executive brief showing financial risk exposure.",
+     sellCTA:"Schedule a 15-minute executive briefing after the Compliance Officer has evaluated and is ready to recommend.",
+     sellNurture:"You don't nurture the CEO directly — you equip the Compliance Officer to champion internally. Provide board-ready materials, ROI calculations, executive summaries.",
+     redFlags:"Delegates entirely without questions (lost interest). Asks about price before understanding value. Mentions competitors the Compliance Officer didn't raise.",
+     championTip:"Don't sell to the CEO. Equip the Compliance Officer to sell TO the CEO with: one-page risk brief, simple ROI, peer references, and a 3-slide board presentation.",
+     convoStarters:["How are you currently quantifying your organization's HIPAA risk exposure for the board?","I work with several [similar org type] CEOs on compliance strategy — would a brief conversation be worthwhile?","If a breach happened tomorrow, do you feel confident in your incident response documentation?"]
+    },
+    {id:"cfo",name:"CFO / Controller",shortName:"CFO",emoji:"💰",role:"Budget Gatekeeper",tag:"blocker",tagLabel:"Budget Gate",orgSize:"200+ employees",age:"40-60",
+     titles:"CFO, Controller, VP of Finance, Finance Director",
+     career:"CPA background, often from public accounting or healthcare audit firms.",
+     reports:"Reports to CEO. Manages finance department.",
+     summary:"Driven by control and predictability. Views compliance as a cost to be managed, not a value creator — until you frame it as risk mitigation with quantifiable ROI. Needs hard numbers, not features.",
+     fears:"Unbudgeted compliance costs, surprise regulatory penalties, being blindsided by a breach's financial impact.",
+     aspirations:"Predictable costs, quantified risk reduction, demonstrable ROI to the board.",
+     dayInLife:"Budget meetings, financial reporting, cost analysis. Compliance spending is one line item competing against clinical equipment, staffing, and facilities.",
+     triggers:"Insurance premium increase citing compliance gaps, breach at peer org with publicized financial impact, audit finding, budget planning season.",
+     objections:[
+       {q:"What does this cost?",a:"Transparent pricing: SPSRA $499/year. Mid-market full suite $4,450-$12,500/year. No hidden fees, no per-employee surprises, no implementation charges."},
+       {q:"We already have a compliance budget.",a:"How does your current spend compare to your risk exposure? We often find organizations are over-spending on the wrong things or under-spending on what OCR actually evaluates."},
+       {q:"Can we negotiate pricing?",a:"Our pricing is already 70-90% below competitors. We can discuss multi-year commitments or bundled services for additional value."}
+     ],
+     sellChannel:"HFMA conference, peer CFO networks, financial analysis content",
+     sellFirstTouch:"Data-driven content: 'The State of Healthcare Compliance Spending 2026' or '3-Year Compliance ROI Analysis.'",
+     sellCTA:"Schedule a 20-minute financial analysis to see your three-year ROI on compliance platform investment.",
+     sellNurture:"Stage 1: Financial benchmarks, industry spending data. Stage 2: Detailed cost comparison, TCO analysis. Stage 3: Customized ROI projection, contract terms.",
+     redFlags:"'Let me run this past the board' then silence. Delegates to someone without budget authority. Asks only about price, never about value.",
+     championTip:"Provide a one-page executive summary they can present to the CEO: 'Compliance Investment Recommendation: $X investment, $Y risk reduction, Z% ROI over 3 years.'",
+     convoStarters:["How are you currently quantifying your HIPAA compliance spend versus your risk exposure?","What would an unbudgeted $4.88M breach cost do to your organization's financial position?","Are you seeing compliance insurance premiums increase? Many organizations are finding that documented compliance programs reduce those costs."]
+    },
+    {id:"risk-manager",name:"Risk Manager",shortName:"Risk Mgr",emoji:"⚖️",role:"Risk Quantifier",tag:"influencer",tagLabel:"Influencer",orgSize:"200+ employees",age:"40-55",
+     titles:"Risk Manager, Director of Risk Management, Quality Director, Chief Risk Officer",
+     career:"Nursing background or health admin. Moved from clinical to quality improvement. Certifications: CPHRM, ARM.",
+     reports:"Reports to CFO, COO, or Chief Risk Officer.",
+     summary:"Sees hazards before they happen. Thinks in risk matrices and probability. Often underappreciated — clinical staff see them as bureaucratic, finance sees them as a cost center. Medcurity gives them data to prove their value.",
+     fears:"A known risk materializing that they flagged but couldn't get budget to address. Being blamed for inadequate risk assessment.",
+     aspirations:"Having quantifiable data to present to leadership that proves the value of proactive risk management.",
+     dayInLife:"Morning: Review incident reports, near-miss analysis. Mid-day: Risk committee meetings, vendor risk assessments. Afternoon: Insurance renewal documentation, policy updates.",
+     triggers:"New HIPAA enforcement action announced, peer organization penalized, insurance underwriter requests documentation, board requests risk assessment update.",
+     objections:[
+       {q:"We already do risk assessments.",a:"How quantitative are they? NIST-aligned scoring gives you probability × impact matrices OCR actually respects — not just checkbox compliance."},
+       {q:"This is the Compliance Officer's responsibility.",a:"Risk management and compliance are complementary. Medcurity bridges both — quantitative risk data for you, compliance documentation for them."},
+       {q:"We need enterprise risk management, not just HIPAA.",a:"Our NIST-aligned framework integrates into enterprise risk. HIPAA risk is one of your highest-exposure areas — start here and expand."}
+     ],
+     sellChannel:"Healthcare risk management conferences, ASHRM events, professional associations",
+     sellFirstTouch:"Educational content about risk quantification, NIST Framework application in healthcare.",
+     sellCTA:"Schedule a free risk assessment to quantify your organization's current HIPAA risk exposure using NIST methodology.",
+     sellNurture:"Stage 1: Risk management trends, NIST guidance. Stage 2: Quantitative risk scoring demos, case studies. Stage 3: Free risk assessment, remediation roadmap.",
+     redFlags:"Delegates to Compliance Officer without involvement. Questions whether HIPAA risk belongs in their portfolio.",
+     championTip:"Help them see Medcurity as the tool that finally gives them quantifiable data to justify their recommendations to leadership.",
+     convoStarters:["How do you currently quantify HIPAA risk in your enterprise risk register?","Are you seeing the same gap we see — most organizations can identify risks but struggle to prioritize remediation quantitatively?","When your insurance underwriter asks for HIPAA compliance documentation, how long does it take to compile?"]
+    },
+    {id:"hr-director",name:"HR Director",shortName:"HR Director",emoji:"👥",role:"Training Champion",tag:"influencer",tagLabel:"Influencer",orgSize:"50+ employees",age:"35-55",
+     titles:"HR Director, Training Manager, Learning & Development Manager, Employee Development Coordinator",
+     career:"HR generalist progression or education background. Certifications: SHRM-CP/SCP, PHR/SPHR.",
+     reports:"Reports to COO or CEO. Manages HR team and training programs.",
+     summary:"Responsible for HIPAA training compliance but often stuck with outdated tools — PowerPoints, annual lunch-and-learns, sign-in sheets. Medcurity Academy solves their biggest headache: getting 100% completion.",
+     fears:"Staff training non-compliance being cited in an audit. Employees complaining about training. Being responsible for something they can't control.",
+     aspirations:"High training completion rates, engaged staff, efficient onboarding, being seen as a strategic HR leader.",
+     dayInLife:"Morning: Onboarding new hires, benefits questions. Mid-day: Training coordination, policy updates. Afternoon: Performance management, compliance tracking.",
+     triggers:"New employee orientation season, annual training deadline approaching, OCR audit asking for training records, staff member causes a HIPAA incident.",
+     objections:[
+       {q:"We already have training.",a:"What's your completion rate? Industry average is 67%. Medcurity Academy typically achieves 95%+ with role-based, engaging content and automated reminders."},
+       {q:"Staff complain about more training.",a:"Our modules are 10-15 minutes, role-specific, and can be completed on any device. No more 2-hour compliance lectures."},
+       {q:"We use our LMS for everything.",a:"Medcurity Academy integrates with or complements your LMS. The difference is healthcare-specific, HIPAA-focused content that stays current with regulatory changes."}
+     ],
+     sellChannel:"SHRM events, HR conferences, LinkedIn, email marketing",
+     sellFirstTouch:"Free resource: 'The HR Director's Guide to Increasing HIPAA Training Completion Rates.'",
+     sellCTA:"Start a free 30-day trial of Medcurity Academy and see your HIPAA training completion rates improve.",
+     sellNurture:"Stage 1: Training effectiveness benchmarks, completion rate data. Stage 2: Medcurity Academy demo, comparison with current approach. Stage 3: Pilot deployment, ROI tracking.",
+     redFlags:"'We'll check with IT' then silence. Asks only about content format, not outcomes.",
+     championTip:"Offer a pilot: 'Deploy Medcurity Academy for one department for 30 days. Measure completion rates. If they don't improve, no obligation.'",
+     convoStarters:["What's your current HIPAA training completion rate?","How do you handle training for staff who work odd shifts or multiple locations?","When was the last time your training content was updated for the latest HIPAA rules?"]
+    },
+    {id:"medical-director",name:"Medical Director",shortName:"Med Director",emoji:"🩺",role:"Clinical Influencer",tag:"influencer",tagLabel:"Influencer",orgSize:"Hospitals & large groups",age:"45-65",
+     titles:"Medical Director, CMO, VP of Medical Affairs, Physician Champion, Department Chair",
+     career:"Physician who transitioned to leadership — MD with additional health admin training.",
+     reports:"Reports to CEO. Dual clinical and administrative authority.",
+     summary:"Entered medicine to heal patients. Views data security as an extension of patient care. Hates administrative burden. Will support compliance if it doesn't disrupt clinical workflows. Will block it if it adds physician time.",
+     fears:"Being held personally liable for a breach. Being seen as an administrator rather than a physician. Staff viewing compliance as a barrier to patient care.",
+     aspirations:"Security-aware clinical culture that doesn't slow down care delivery. Being a physician leader respected by clinical peers.",
+     dayInLife:"Split between clinical duties and administrative meetings. Compliance is far down the priority list unless directly tied to patient safety.",
+     triggers:"Patient asks about data security, breach at peer hospital, medical staff committee raises concerns, CMS/accreditation requirements.",
+     objections:[
+       {q:"This will add to physician workload.",a:"Zero physician time required. Medcurity works with your compliance and IT teams. Physicians only interact through brief, role-specific training modules."},
+       {q:"We have more pressing clinical priorities.",a:"Absolutely. That's exactly why Medcurity handles compliance so your clinical leaders can focus on care. Think of us as compliance infrastructure — invisible but essential."},
+       {q:"I don't see how this relates to patient care.",a:"Every patient trusts you with their most sensitive information. A breach destroys that trust. Compliance IS patient care — just a different dimension of it."}
+     ],
+     sellChannel:"ACHE Congress, specialty conferences, peer referrals",
+     sellFirstTouch:"Peer introduction from another Medical Director. Or thought leadership article about physician leadership in data security.",
+     sellCTA:"Join [peer Medical Director] in building a security-aware culture that protects your patients and your organization.",
+     sellNurture:"Stage 1: Clinical quality and security content. Stage 2: Peer case studies. Stage 3: Brief executive presentation after Compliance Officer evaluates.",
+     redFlags:"Goes silent after demo. Delegates without questions. Expresses concern about 'more admin burden.'",
+     championTip:"Provide data showing clinical/quality outcomes, not just compliance metrics. Frame compliance as patient safety, not bureaucracy.",
+     convoStarters:["How do you balance clinical priorities with the growing compliance requirements in healthcare?","Are your physicians aware of their personal liability exposure under HIPAA?","What would it mean for your patients' trust if your organization had a data breach?"]
+    },
+    {id:"fqhc-admin",name:"FQHC Administrator",shortName:"FQHC Admin",emoji:"🏥",role:"Mission-Driven Leader",tag:"champion",tagLabel:"Champion",orgSize:"20-500+ employees",age:"40-60",
+     titles:"Executive Director, CEO, Health Center Director, Chief Administrative Officer",
+     career:"Public health background (MPH, MHA), started in community health worker or program coordinator roles. Deeply mission-driven.",
+     reports:"Reports to Board of Directors. Manages entire health center operation.",
+     summary:"Runs on tight budgets with massive compliance requirements — HRSA, FTCA, HIPAA, CMS all at once. Every dollar must serve the mission. Values peer recommendations from other FQHCs above all. Medcurity already serves health centers — lead with that.",
+     fears:"Losing HRSA funding. Failing the community. Being unable to afford compliance and having to choose between patient care and regulatory requirements.",
+     aspirations:"Serving the underserved with excellent care AND compliance. Being recognized by HRSA and peers as a model health center.",
+     dayInLife:"Grant reporting, community outreach, staff management, regulatory compliance across multiple frameworks, board preparation, budget juggling.",
+     triggers:"HRSA site visit scheduled, UDS reporting deadline, 330 grant renewal, breach at another FQHC, new HIPAA requirements announced.",
+     objections:[
+       {q:"We can't afford this with our budget.",a:"SPSRA is $499/year. Many FQHCs use HRSA grant funds for compliance — it's an allowable expense that protects your grant status."},
+       {q:"We already work with a consultant.",a:"How often do they update your SRA? Most consultants do annual visits. Medcurity provides year-round compliance management for less than a single consultant day rate."},
+       {q:"We need something that covers HRSA compliance too.",a:"Our HIPAA compliance program satisfies the HIPAA requirements within HRSA compliance. It's one less thing your team has to manage separately."}
+     ],
+     sellChannel:"NACHC membership, NACHC Annual Forum, state primary care associations",
+     sellFirstTouch:"Peer introduction from another FQHC administrator who uses Medcurity. Or webinar: 'HIPAA Compliance for FQHCs on a Budget.'",
+     sellCTA:"Get a free HRSA compliance assessment to see where your center stands and what gaps Medcurity can help fill.",
+     sellNurture:"Stage 1: FQHC-specific content, HRSA compliance guides, peer success stories. Stage 2: FQHC-specific demo, grant funding guidance. Stage 3: Peer call with existing FQHC customer.",
+     redFlags:"'Revisit next fiscal year' (budget excuse). Delegates to junior staff without ED involvement.",
+     championTip:"Provide board-ready materials showing ROI and HRSA grant compliance benefit. Connect them with another FQHC ED who uses Medcurity.",
+     convoStarters:["How are you currently managing HIPAA compliance alongside all your other regulatory requirements?","Are you using HRSA grant funds for compliance technology? Many FQHCs do — it's an allowable expense.","I work with several community health centers on HIPAA — would it be helpful to hear how they're approaching the 2026 updates?"]
+    }
+  ],
+  buyingCommittees: {
+    small: {title:"Small Practice (5-50 Employees)",desc:"Decision-making is fast and informal. Usually 2 people in the room.",members:[{emoji:"📋",title:"Practice Manager",role:"Champion & User",action:"Evaluates, uses daily, presents to physician"},{emoji:"🩺",title:"Physician-Owner",role:"Final Approver",action:"Signs off on cost. Asks 'is it worth it?'"}],cycle:"1-4 weeks",tip:"Sell to the Practice Manager. Equip them to get physician approval with a 1-page ROI sheet. Don't try to schedule the physician — they won't attend a demo."},
+    mid: {title:"Mid-Size Organization (100-500 Employees)",desc:"Formal evaluation process. 3-5 stakeholders typically involved. 2-4 month sales cycle.",members:[{emoji:"🛡️",title:"Compliance Officer",role:"Champion",action:"Evaluates, recommends, manages implementation"},{emoji:"💻",title:"CIO/IT Director",role:"Technical Evaluator",action:"Assesses integration, security, infrastructure fit"},{emoji:"💰",title:"CFO/Controller",role:"Budget Approver",action:"Approves cost, wants ROI data"},{emoji:"👔",title:"CEO/COO",role:"Final Sign-off",action:"Rubber stamps if CO and CFO align"},{emoji:"👥",title:"HR Director",role:"Training Stakeholder",action:"Evaluates Medcurity Academy for staff training"}],cycle:"2-4 months",tip:"Win the Compliance Officer first. Help them build an internal business case. Prepare for CFO price scrutiny and CIO technical questions."},
+    large: {title:"Large Health System (1,000+ Employees)",desc:"Formal RFP process likely. 6-10 stakeholders. 6-12 month sales cycle with procurement involvement.",members:[{emoji:"🛡️",title:"Compliance Officer",role:"Internal Champion",action:"Drives the evaluation, writes the justification"},{emoji:"🔒",title:"CISO",role:"Security Gatekeeper",action:"Must approve security architecture"},{emoji:"💻",title:"CIO",role:"IT Sponsor",action:"Approves integration with enterprise stack"},{emoji:"💰",title:"CFO",role:"Budget Authority",action:"Final budget approval, needs board-level ROI"},{emoji:"👔",title:"CEO",role:"Executive Sponsor",action:"Final sign-off, cares about risk posture"},{emoji:"⚖️",title:"Risk Manager",role:"Risk Assessor",action:"Validates risk methodology"},{emoji:"🏛️",title:"Legal/General Counsel",role:"Contract Review",action:"Reviews terms, liability, data handling"},{emoji:"📦",title:"Procurement",role:"Process Manager",action:"Manages RFP, vendor assessment"}],cycle:"6-12 months",tip:"This is a multi-touch, multi-champion sale. You need the Compliance Officer AND the CISO as internal advocates. Prepare for formal RFP, security review, and legal contract negotiation."}
+  },
+  scorecardQuestions: [
+    {q:"Has the prospect had a breach or OCR inquiry in the last 3 years?",yes:3,no:0},
+    {q:"Is there a dedicated Compliance Officer or Privacy Officer?",yes:2,no:1},
+    {q:"Are they currently using spreadsheets/consultants (no platform)?",yes:3,no:0},
+    {q:"Is the org in our ICP size range (5-500 employees)?",yes:2,no:-1},
+    {q:"Has a champion been identified who can drive internal adoption?",yes:3,no:-2},
+    {q:"Is budget allocated or allocatable this fiscal year?",yes:2,no:-1},
+    {q:"Are there regulatory triggers (OCR audit, HRSA visit, new rule)?",yes:2,no:0},
+    {q:"Has a competitor been mentioned or is in play?",yes:1,no:0}
+  ],
   contentGaps: [
     {pri:"p1",topic:"HIPAA Compliance for Dental Practices",intent:"buying",leader:"Accountable HQ",why:"Massive market. Thousands of practices. Funnel to SPSRA $499/yr."},
     {pri:"p1",topic:"HIPAA for Mental Health / Behavioral Health",intent:"buying",leader:"Accountable HQ",why:"Extra complexity (42 CFR Part 2). Growing with telehealth."},
@@ -1055,7 +1355,7 @@ function buildGapTable() {
       <td>${g.leader}</td>
       <td>${g.why}</td>
     </tr>`).join('');
-  table.innerHTML = `<tr><th></th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>${rows}`;
+  table.innerHTML = `<tr><th></th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Way It Matters</th></tr>${rows}`;
 }
 
 function filterGapTable(e) {
@@ -1084,12 +1384,220 @@ function updatePublishedCount() {
   document.getElementById('published-count').textContent = count;
 }
 
+// Build Persona Grid
+function buildPersonas() {
+  const grid = document.getElementById('persona-grid');
+  grid.innerHTML = COMMAND_DATA.personas.map(p => `
+    <div class="persona-card" onclick="togglePersona('${p.id}')" id="pc-${p.id}">
+      <div class="p-avatar" style="background:rgba(220,38,38,.08)">${p.emoji}</div>
+      <h4>${p.shortName}</h4>
+      <div class="p-role">${p.role}</div>
+      <span class="p-tag ${p.tag}">${p.tagLabel}</span>
+      <p>${p.summary.substring(0,80)}...</p>
+      <div class="expand-hint">Click to expand</div>
+    </div>`).join('');
+  // Populate conversation starter dropdown
+  const sel = document.getElementById('convo-persona-select');
+  COMMAND_DATA.personas.forEach(p => {
+    sel.innerHTML += `<option value="${p.id}">${p.emoji} ${p.name}</option>`;
+  });
+}
+
+function togglePersona(id) {
+  const el = document.getElementById('persona-detail');
+  const p = COMMAND_DATA.personas.find(x => x.id === id);
+  document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
+  if (el.dataset.open === id) { el.innerHTML = ''; el.dataset.open = ''; el.classList.remove('open'); return; }
+  document.getElementById('pc-'+id).classList.add('active');
+  el.dataset.open = id;
+  el.className = 'persona-detail open';
+  el.innerHTML = `
+    <div class="pd-header">
+      <div>
+        <h3>${p.emoji} ${p.name}</h3>
+        <div class="pd-subtitle">${p.titles}</div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <span class="p-tag ${p.tag}">${p.tagLabel}</span>
+          <span style="font-size:10px;color:var(--text3)">Org: ${p.orgSize}</span>
+          <span style="font-size:10px;color:var(--text3)">Age: ${p.age}</span>
+        </div>
+      </div>
+      <button class="close-btn" onclick="document.getElementById('persona-detail').innerHTML='';document.getElementById('persona-detail').dataset.open='';document.getElementById('persona-detail').className='persona-detail';document.querySelectorAll('.persona-card').forEach(c=>c.classList.remove('active'))">Close</button>
+    </div>
+    <div class="pd-tabs">
+      <div class="pd-tab active" onclick="showPersonaTab('${id}','profile',this)">Profile</div>
+      <div class="pd-tab" onclick="showPersonaTab('${id}','psychology',this)">Psychology</div>
+      <div class="pd-tab" onclick="showPersonaTab('${id}','objections',this)">Objections</div>
+      <div class="pd-tab" onclick="showPersonaTab('${id}','selling',this)">How to Sell</div>
+    </div>
+    <div class="pd-content" id="pd-content-area"></div>`;
+  showPersonaTab(id,'profile',el.querySelector('.pd-tab.active'));
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showPersonaTab(id,tab,btn) {
+  const p = COMMAND_DATA.personas.find(x => x.id === id);
+  const area = document.getElementById('pd-content-area');
+  document.querySelectorAll('.pd-tab').forEach(t => t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  if(tab==='profile') {
+    area.innerHTML = `
+      <div class="pd-two-col">
+        <div>
+          <h4>Role & Organization</h4>
+          <p><strong>Titles:</strong> ${p.titles}</p>
+          <p><strong>Org Size:</strong> ${p.orgSize}</p>
+          <p><strong>Reports to:</strong> ${p.reports}</p>
+          <p><strong>Career Path:</strong> ${p.career}</p>
+          <h4>Day in the Life</h4>
+          <p>${p.dayInLife}</p>
+        </div>
+        <div>
+          <h4>Summary</h4>
+          <p style="font-size:13px;line-height:1.8">${p.summary}</p>
+          <h4>Key Triggers</h4>
+          <p>${p.triggers}</p>
+        </div>
+      </div>`;
+  } else if(tab==='psychology') {
+    area.innerHTML = `
+      <div class="pd-two-col">
+        <div class="hl-box red">
+          <h4 style="margin-top:0;color:#ef4444">Fears & Pain Points</h4>
+          <p>${p.fears}</p>
+        </div>
+        <div class="hl-box green">
+          <h4 style="margin-top:0;color:var(--green)">Aspirations & Goals</h4>
+          <p>${p.aspirations}</p>
+        </div>
+      </div>
+      <h4>Red Flags (You're Losing Them)</h4>
+      <p>${p.redFlags}</p>
+      <h4>How to Get Them to Champion</h4>
+      <p>${p.championTip}</p>`;
+  } else if(tab==='objections') {
+    area.innerHTML = `
+      <h4>Common Objections & Responses</h4>
+      ${p.objections.map(o => `
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin:10px 0">
+          <p style="color:var(--yellow);font-weight:600;font-style:italic;margin-bottom:6px">"${o.q}"</p>
+          <p>${o.a}</p>
+        </div>`).join('')}`;
+  } else if(tab==='selling') {
+    area.innerHTML = `
+      <div class="pd-two-col">
+        <div>
+          <h4>Best Outreach Channels</h4>
+          <p>${p.sellChannel}</p>
+          <h4>Best First Touch</h4>
+          <p>${p.sellFirstTouch}</p>
+          <h4>Nurture Sequence</h4>
+          <p>${p.sellNurture}</p>
+        </div>
+        <div>
+          <h4>The CTA That Converts</h4>
+          <div class="hl-box green"><p style="font-weight:600">${p.sellCTA}</p></div>
+          <h4>Conversation Starters</h4>
+          ${p.convoStarters.map(c => `<p style="padding:8px 0;border-bottom:1px solid var(--border)">"${c}"</p>`).join('')}
+        </div>
+      </div>`;
+  }
+}
+
+// Buying Committee Map
+function showBuyingMap(size,btn) {
+  btn.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const bc = COMMAND_DATA.buyingCommittees[size];
+  document.getElementById('buying-map-content').innerHTML = `
+    <h4 style="font-size:13px;font-weight:700;color:#fff;margin-bottom:8px">${bc.title}</h4>
+    <p style="margin-bottom:12px">${bc.desc}</p>
+    <div class="bc-map">${bc.members.map(m => `
+      <div class="bc-node">
+        <div class="bc-emoji">${m.emoji}</div>
+        <div class="bc-title">${m.title}</div>
+        <div class="bc-role" style="color:var(--red)">${m.role}</div>
+        <div style="font-size:9px;color:var(--text2);margin-top:4px">${m.action}</div>
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:16px;display:flex;gap:16px;flex-wrap:wrap">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;flex:1;min-width:200px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Typical Sales Cycle</div>
+        <div style="font-size:16px;font-weight:800;color:#fff">${bc.cycle}</div>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;flex:2;min-width:200px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Pro Tip</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6">${bc.tip}</div>
+      </div>
+    </div>`;
+}
+
+// Deal Qualification Scorecard
+function buildScorecard() {
+  const container = document.getElementById('scorecard-questions');
+  container.innerHTML = COMMAND_DATA.scorecardQuestions.map((q,i) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+      <span style="flex:1;font-size:12px;color:var(--text2)">${q.q}</span>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button class="filter-btn sc-btn" data-qi="${i}" data-val="yes" onclick="scoreAnswer(${i},'yes',this)" style="padding:6px 12px;font-size:10px">Yes</button>
+        <button class="filter-btn sc-btn" data-qi="${i}" data-val="no" onclick="scoreAnswer(${i},'no',this)" style="padding:6px 12px;font-size:10px">No</button>
+      </div>
+    </div>`).join('');
+}
+
+const scorecardAnswers = {};
+function scoreAnswer(idx,val,btn) {
+  btn.parentElement.querySelectorAll('.sc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  scorecardAnswers[idx] = val;
+  let total = 0;
+  const qs = COMMAND_DATA.scorecardQuestions;
+  Object.keys(scorecardAnswers).forEach(k => {
+    total += scorecardAnswers[k] === 'yes' ? qs[k].yes : qs[k].no;
+  });
+  const maxScore = qs.reduce((a,q) => a + q.yes, 0);
+  const pct = Math.round((total / maxScore) * 100);
+  const scoreEl = document.getElementById('deal-score');
+  const verdictEl = document.getElementById('deal-verdict');
+  scoreEl.textContent = total + '/' + maxScore;
+  if(pct >= 70) { scoreEl.style.color = 'var(--green)'; verdictEl.innerHTML = '<strong style="color:var(--green)">Strong Deal</strong> — High probability of close. Prioritize this opportunity.'; }
+  else if(pct >= 40) { scoreEl.style.color = 'var(--yellow)'; verdictEl.innerHTML = '<strong style="color:var(--yellow)">Moderate Deal</strong> — Needs work. Identify and address gaps before investing heavily.'; }
+  else { scoreEl.style.color = 'var(--red)'; verdictEl.innerHTML = '<strong style="color:var(--red)">Weak Deal</strong> — Low probability. Nurture long-term or deprioritize.'; }
+}
+
+// Conversation Starters
+function showConvoStarters() {
+  const id = document.getElementById('convo-persona-select').value;
+  const out = document.getElementById('convo-starters-output');
+  if(!id) { out.innerHTML = ''; return; }
+  const p = COMMAND_DATA.personas.find(x => x.id === id);
+  out.innerHTML = `
+    <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:12px">Openers for ${p.name}</h4>
+    ${p.convoStarters.map((c,i) => `
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <p style="margin:0;flex:1">"${c}"</p>
+        <button class="action-btn" onclick="navigator.clipboard.writeText(\`${c.replace(/`/g,"\\`")}\`).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+      </div>`).join('')}
+    <div style="margin-top:16px">
+      <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--yellow);margin-bottom:8px">Best CTA for ${p.name}</h4>
+      <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:14px">
+        <p style="font-weight:600;color:var(--green);margin:0">${p.sellCTA}</p>
+      </div>
+    </div>`;
+}
+
 // Initialize All
 buildFeed();
 buildBattleground();
 buildRadar();
 buildGapTable();
+buildPersonas();
+buildScorecard();
+showBuyingMap('small',document.querySelector('#buying-committee-section .filter-btn.active'));
 calcPricing();
+// Set last updated date
+const d = new Date(); const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('last-updated-date').textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
 </script>
 </body>
 </html>
