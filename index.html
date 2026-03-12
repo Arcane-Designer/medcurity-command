@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medcurity Command</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--surface:#111;--surface2:#161616;--border:#222;--border2:#2a2a2a;--text:#e0e0e0;--text2:#999;--text3:#666;--red:#dc2626;--green:#22c55e;--yellow:#f59e0b;--blue:#3b82f6;--purple:#818cf8;--cyan:#22d3ee;--orange:#f97316;--sidebar-w:240px}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:24px 20px;border-bottom:1px solid var(--border)}
+.sidebar-logo h1{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
+.sidebar-logo span{color:var(--red)}
+.sidebar-logo .sub{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:2px}
+.sidebar-nav{flex:1;padding:16px 0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s;border-left:3px solid transparent;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.nav-item.active{color:#fff;background:rgba(220,38,38,.06);border-left-color:var(--red)}
+.nav-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-item .badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)}
+.sidebar-footer .update-time{color:var(--text2);font-weight:600}
+.main{margin-left:var(--sidebar-w);min-height:100vh;padding:32px}
+.tab{display:none}.tab.active{display:block}
+.page-title{font-size:28px;font-weight:900;color:#fff;margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:32px}
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:32px}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:border-color .2s}
+.stat-card:hover{border-color:var(--border2)}
+.stat-card .stat-val{font-size:28px;font-weight:900;color:#fff}
+.stat-card .stat-val.red{color:var(--red)}.stat-card .stat-val.green{color:var(--green)}.stat-card .stat-val.yellow{color:var(--yellow)}.stat-card .stat-val.blue{color:var(--blue)}
+.stat-card .stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.section-hdr{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.feed{display:flex;flex-direction:column;gap:8px}
+.feed-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:border-color .2s;cursor:pointer}
+.feed-item:hover{border-color:var(--border2)}
+.feed-item .fi-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.feed-item .fi-icon.breach{background:rgba(220,38,38,.12);color:var(--red)}
+.feed-item .fi-icon.signal{background:rgba(245,158,11,.12);color:var(--yellow)}
+.feed-item .fi-icon.competitor{background:rgba(99,102,241,.12);color:var(--purple)}
+.feed-item .fi-icon.content{background:rgba(34,197,94,.12);color:var(--green)}
+.feed-item .fi-body{flex:1;min-width:0}
+.feed-item .fi-title{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed-item .fi-desc{font-size:12px;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed-item .fi-time{font-size:11px;color:var(--text3);flex-shrink:0}
+.feed-item .fi-sev{padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.sev-hot{background:rgba(220,38,38,.12);color:var(--red)}.sev-warm{background:rgba(245,158,11,.12);color:var(--yellow)}.sev-cool{background:rgba(59,130,246,.12);color:var(--blue)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.comp-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s}
+.comp-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.comp-card .cc-header{padding:20px;display:flex;justify-content:space-between;align-items:flex-start}
+.comp-card .cc-name{font-size:18px;font-weight:800;color:#fff}
+.comp-card .cc-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.threat-pill{padding:4px 10px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.threat-pill.critical{background:rgba(239,68,68,.12);color:#ef4444}.threat-pill.high{background:rgba(245,158,11,.12);color:var(--yellow)}.threat-pill.moderate{background:rgba(59,130,246,.12);color:var(--blue)}
+.comp-card .cc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:0 20px}
+.comp-card .cc-stat{background:var(--surface2);padding:10px;text-align:center}
+.comp-card .cc-stat .v{font-size:14px;font-weight:800;color:#fff}
+.comp-card .cc-stat .l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.comp-card .cc-quick{padding:16px 20px;font-size:12px;color:var(--text2);line-height:1.5;border-top:1px solid var(--border)}
+.comp-card .cc-expand{padding:12px 20px;border-top:1px solid var(--border);font-size:11px;font-weight:600;color:var(--red);text-align:center;text-transform:uppercase;letter-spacing:1px}
+.detail-panel{display:none;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-top:16px}
+.detail-panel.open{display:block}
+.detail-panel h3{font-size:16px;font-weight:800;color:#fff;margin-bottom:16px}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.dp-col{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px}
+.dp-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.dp-col h4.win{color:var(--green)}.dp-col h4.lose{color:#ef4444}
+.dp-col li{font-size:12px;color:var(--text2);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.5;list-style:none}
+.dp-col li:last-child{border-bottom:none}
+.dp-col li strong{color:#fff}
+.objection-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.obj-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px}
+.obj-card .q{font-size:11px;font-weight:600;color:var(--yellow);margin-bottom:6px;font-style:italic}
+.obj-card .a{font-size:12px;color:var(--text2);line-height:1.5}
+.radar-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.radar-col h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.radar-col h3 .cnt{background:var(--red);color:#fff;font-size:10px;padding:2px 7px;border-radius:8px}
+.radar-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.radar-card:hover{border-color:var(--border2)}
+.radar-card .rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.radar-card .rc-name{font-size:13px;font-weight:700;color:#fff}
+.radar-card .rc-loc{font-size:11px;color:var(--text3)}
+.radar-card .rc-detail{font-size:12px;color:var(--text2);line-height:1.5;margin-top:8px}
+.radar-card .rc-meta{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.radar-card .rc-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,255,255,.05);color:var(--text2)}
+.radar-card .rc-action{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text2);line-height:1.5}
+.radar-card .rc-action strong{color:var(--green)}
+.radar-expand{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.radar-card.expanded .radar-expand{display:block}
+.arsenal-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.arsenal-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px}
+.arsenal-card h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px}
+.arsenal-card .a-sub{font-size:12px;color:var(--text3);margin-bottom:16px}
+.arsenal-card select,.arsenal-card input{width:100%;background:var(--bg);border:1px solid var(--border);color:#fff;padding:10px 14px;border-radius:8px;font-family:inherit;font-size:13px;margin-bottom:12px;outline:none}
+.arsenal-card select:focus,.arsenal-card input:focus{border-color:var(--red)}
+.arsenal-output{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12px;color:var(--text2);line-height:1.6;max-height:400px;overflow-y:auto}
+.arsenal-output h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin:12px 0 8px}
+.arsenal-output h4:first-child{margin-top:0}
+.arsenal-output p{margin-bottom:8px}
+.arsenal-output strong{color:#fff}
+.gap-table{width:100%;border-collapse:collapse;background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:12px}
+.gap-table th{background:var(--surface);padding:10px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3)}
+.gap-table td{padding:10px 14px;border-top:1px solid var(--border);color:var(--text2);vertical-align:top}
+.gap-table tr:hover{background:rgba(255,255,255,.02)}
+.pri{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;text-transform:uppercase}
+.pri.p1{background:rgba(220,38,38,.12);color:var(--red)}.pri.p2{background:rgba(245,158,11,.12);color:var(--yellow)}.pri.p3{background:rgba(59,130,246,.12);color:var(--blue)}
+.playbook-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pb-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px}
+.pb-card h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px}
+.pb-card .pb-sub{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.pb-card .pb-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.pb-card .pb-row:last-child{border-bottom:none}
+.pb-card .pb-row .k{color:var(--text2)}.pb-card .pb-row .v{color:#fff;font-weight:600;text-align:right;max-width:60%}
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.persona-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.persona-card h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.persona-card .p-role{font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:700}
+.persona-card p{font-size:11px;color:var(--text2);line-height:1.5}
+.close-btn{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .2s}
+.close-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.copy-btn{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.2);color:var(--red);padding:6px 12px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;transition:all .2s;margin-top:8px}
+.copy-btn:hover{background:rgba(220,38,38,.2)}
+.pitch-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.pitch-box h4{font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.pitch-box p{font-size:13px;color:var(--text);line-height:1.7}
+.two-col-feed{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:1200px){.stats-row{grid-template-columns:repeat(3,1fr)}.radar-cols{grid-template-columns:1fr}.arsenal-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h1><span>M</span>EDCURITY</h1>
+    <div class="sub">Command Center</div>
+  </div>
+  <div class="sidebar-nav">
+    <a class="nav-item active" data-tab="mission-control"><div class="dot" style="background:var(--red)"></div>Mission Control</a>
+    <a class="nav-item" data-tab="battleground"><div class="dot" style="background:var(--orange)"></div>The Battleground</a>
+    <a class="nav-item" data-tab="radar"><div class="dot" style="background:var(--yellow)"></div>Radar<span class="badge" id="radar-badge">16</span></a>
+    <a class="nav-item" data-tab="arsenal"><div class="dot" style="background:var(--green)"></div>Arsenal</a>
+    <a class="nav-item" data-tab="intel"><div class="dot" style="background:var(--blue)"></div>Intel</a>
+    <a class="nav-item" data-tab="playbook"><div class="dot" style="background:var(--purple)"></div>Playbook</a>
+  </div>
+  <div class="sidebar-footer">
+    Next scan: <span class="update-time">Tue 7:00 AM</span><br>
+    Last updated: <span class="update-time" id="last-updated">Mar 11, 2026</span>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ==================== MISSION CONTROL ==================== -->
+<div class="tab active" id="mission-control">
+  <div class="page-title">Mission Control</div>
+  <div class="page-sub">Your GTM intelligence at a glance. What changed, what matters, what to do next.</div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val red">10</div><div class="stat-lbl">Hot Leads (Breaches)</div></div>
+    <div class="stat-card"><div class="stat-val yellow">6</div><div class="stat-lbl">Hiring Signals</div></div>
+    <div class="stat-card"><div class="stat-val green">3.6x</div><div class="stat-lbl">SPSRA Price Advantage</div></div>
+    <div class="stat-card"><div class="stat-val blue">5</div><div class="stat-lbl">Competitors Tracked</div></div>
+    <div class="stat-card"><div class="stat-val">15</div><div class="stat-lbl">Content Gaps</div></div>
+    <div class="stat-card"><div class="stat-val red">$499</div><div class="stat-lbl">SPSRA / Year</div></div>
+  </div>
+
+  <div class="section-hdr">Recent Activity Feed</div>
+  <div class="feed" id="activity-feed"></div>
+</div>
+
+<!-- ==================== THE BATTLEGROUND ==================== -->
+<div class="tab" id="battleground">
+  <div class="page-title">The Battleground</div>
+  <div class="page-sub">Competitive intelligence on every rival. Click a card to expand the full battlecard.</div>
+
+  <div class="card-grid" id="comp-grid"></div>
+  <div id="comp-detail"></div>
+</div>
+
+<!-- ==================== RADAR ==================== -->
+<div class="tab" id="radar">
+  <div class="page-title">Radar</div>
+  <div class="page-sub">Live signals from the market. Breaches, hiring activity, and competitor moves. Updated every Tuesday at 7 AM.</div>
+
+  <div class="radar-cols" id="radar-cols"></div>
+</div>
+
+<!-- ==================== ARSENAL ==================== -->
+<div class="tab" id="arsenal">
+  <div class="page-title">Arsenal</div>
+  <div class="page-sub">Sales weapons. Objection handlers, pitch templates, and competitive positioning at your fingertips.</div>
+
+  <div class="arsenal-grid">
+    <div class="arsenal-card">
+      <h3>Objection Handler</h3>
+      <div class="a-sub">Select a competitor to see tailored objection responses</div>
+      <select id="obj-select" onchange="showObjections()">
+        <option value="">Choose competitor...</option>
+        <option value="accountable">Accountable HQ</option>
+        <option value="compliancy">Compliancy Group</option>
+        <option value="vanta">Vanta</option>
+        <option value="drata">Drata</option>
+        <option value="intraprise">Intraprise Health</option>
+      </select>
+      <div class="arsenal-output" id="obj-output"><p style="color:var(--text3)">Select a competitor above to load objection responses and landmines.</p></div>
+    </div>
+    <div class="arsenal-card">
+      <h3>Pricing Calculator</h3>
+      <div class="a-sub">See how Medcurity compares on annual cost</div>
+      <label style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px">Employee count</label>
+      <input type="number" id="emp-count" placeholder="e.g. 10" value="10" oninput="calcPricing()">
+      <div class="arsenal-output" id="pricing-output"></div>
+    </div>
+  </div>
+
+  <div class="section-hdr">60-Second Pitch Templates</div>
+  <div class="two-col-feed">
+    <div class="pitch-box">
+      <h4>Mid-Market (20+ employees)</h4>
+      <p>"Based on what you've shared, here's why I think we'd be a great fit. Medcurity is a HIPAA compliance platform built specifically for healthcare organizations like yours. What makes us different is three things: First, our AI-powered Security Risk Analysis &mdash; it produces quantitative, NIST-aligned risk scores that hold up under OCR scrutiny, not just a checklist. Second, you get a dedicated compliance expert who works alongside you year-round. And third, we're a complete platform: SRA, Network Vulnerability Assessments, HIPAA training through Medcurity Academy, vendor management with BAA tracking, SAFER EHR assessments, and a custom policy library &mdash; everything you need in one place."</p>
+      <button class="copy-btn" onclick="copyText(this)">Copy to clipboard</button>
+    </div>
+    <div class="pitch-box">
+      <h4>Small Practice (1-20 employees)</h4>
+      <p>"I hear this a lot from smaller practices &mdash; you know HIPAA is important, but the cost and complexity of most compliance tools don't make sense for your size. That's exactly why we built our Small Practice SRA. It's $499 a year &mdash; not per month, per year. That's less than a third of what most competitors charge. And it's not a watered-down product: you get AI-powered risk analysis with quantitative scoring, expert guidance, and an SRA that holds up under OCR scrutiny. Pair it with Medcurity Academy for affordable staff training and you've got a complete HIPAA program."</p>
+      <button class="copy-btn" onclick="copyText(this)">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INTEL ==================== -->
+<div class="tab" id="intel">
+  <div class="page-title">Intel</div>
+  <div class="page-sub">Content gaps, competitor publishing activity, and strategic content opportunities.</div>
+
+  <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat-card"><div class="stat-val red">5</div><div class="stat-lbl">P1 Gaps</div></div>
+    <div class="stat-card"><div class="stat-val yellow">6</div><div class="stat-lbl">P2 Gaps</div></div>
+    <div class="stat-card"><div class="stat-val blue">4</div><div class="stat-lbl">P3 Gaps</div></div>
+    <div class="stat-card"><div class="stat-val">0</div><div class="stat-lbl">Published</div></div>
+  </div>
+
+  <div class="section-hdr">Priority Content Gaps</div>
+  <table class="gap-table">
+    <tr><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>
+    <tr><td><span class="pri p1">P1</span></td><td><strong>HIPAA Compliance for Dental Practices</strong></td><td>Buying</td><td>Accountable HQ</td><td>Massive market. Thousands of practices. Funnel to SPSRA $499/yr.</td></tr>
+    <tr><td><span class="pri p1">P1</span></td><td><strong>HIPAA for Mental Health / Behavioral Health</strong></td><td>Buying</td><td>Accountable HQ</td><td>Extra complexity (42 CFR Part 2). Growing with telehealth.</td></tr>
+    <tr><td><span class="pri p1">P1</span></td><td><strong>HIPAA Compliance for FQHCs</strong></td><td>Buying</td><td>Accountable HQ</td><td>Medcurity already serves health centers. Own this content.</td></tr>
+    <tr><td><span class="pri p1">P1</span></td><td><strong>How to Prepare for an OCR Audit</strong></td><td>Buying</td><td>Compliancy Group</td><td>Extremely high buying intent. Perfect Medcurity positioning.</td></tr>
+    <tr><td><span class="pri p1">P1</span></td><td><strong>HIPAA BAA Guide</strong></td><td>Educational</td><td>Accountable HQ</td><td>Foundational. Every healthcare org needs BAAs. Drives vendor mgmt awareness.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA Telehealth Compliance</strong></td><td>Buying</td><td>HHS, HIPAA Journal</td><td>Post-pandemic telehealth explosion. Underserved by competitors.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA for Home Health Agencies</strong></td><td>Buying</td><td>Accountable HQ</td><td>Growing market. Unique remote workforce challenges.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA Breach Notification Requirements</strong></td><td>Educational</td><td>HIPAA Journal</td><td>High-traffic foundational topic.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA Incident Response Plan Template</strong></td><td>Buying</td><td>RSI Security</td><td>Actionable template-driven content. Lead gen magnet.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA for Labs &amp; Diagnostic Centers</strong></td><td>Buying</td><td>Accountable HQ</td><td>Massive ePHI volume. Unique compliance challenges.</td></tr>
+    <tr><td><span class="pri p2">P2</span></td><td><strong>HIPAA Privacy Rule vs Security Rule</strong></td><td>Educational</td><td>Accountable HQ</td><td>Very high search volume. Evergreen.</td></tr>
+    <tr><td><span class="pri p3">P3</span></td><td><strong>HIPAA Encryption Requirements</strong></td><td>Technical</td><td>Drata</td><td>2026 rule makes encryption at rest mandatory.</td></tr>
+    <tr><td><span class="pri p3">P3</span></td><td><strong>HIPAA Compliance Metrics &amp; KPIs</strong></td><td>Educational</td><td>Minimal</td><td>Blue ocean content. Appeals to C-suite.</td></tr>
+    <tr><td><span class="pri p3">P3</span></td><td><strong>HIPAA for Medical Device Companies</strong></td><td>Buying</td><td>Minimal</td><td>Emerging niche. FDA + HIPAA intersection.</td></tr>
+    <tr><td><span class="pri p3">P3</span></td><td><strong>HIPAA Third-Party Risk Management</strong></td><td>Educational</td><td>Censinet</td><td>Links to Medcurity vendor management capabilities.</td></tr>
+  </table>
+</div>
+
+<!-- ==================== PLAYBOOK ==================== -->
+<div class="tab" id="playbook">
+  <div class="page-title">Playbook</div>
+  <div class="page-sub">ICP definition, buyer personas, and strategic positioning. The "why" behind everything else.</div>
+
+  <div class="section-hdr">Ideal Customer Profile</div>
+  <div class="playbook-grid">
+    <div class="pb-card">
+      <h3>Tier 1A: Mid-Market</h3>
+      <div class="pb-sub" style="color:var(--yellow)">Primary ICP &mdash; Highest Win Rate</div>
+      <div class="pb-row"><span class="k">Type</span><span class="v">Community hospitals, FQHCs, multi-location clinics</span></div>
+      <div class="pb-row"><span class="k">Size</span><span class="v">50-500 employees</span></div>
+      <div class="pb-row"><span class="k">Locations</span><span class="v">1-15 sites</span></div>
+      <div class="pb-row"><span class="k">Revenue</span><span class="v">$5M - $100M</span></div>
+      <div class="pb-row"><span class="k">Compliance maturity</span><span class="v">Spreadsheets, consultants, or nothing</span></div>
+      <div class="pb-row"><span class="k">Key product</span><span class="v">Full SRA + NVA + Training + Vendor Mgmt</span></div>
+    </div>
+    <div class="pb-card">
+      <h3>Tier 1B: Small Practices</h3>
+      <div class="pb-sub" style="color:var(--yellow)">High-Volume &mdash; SPSRA + Training</div>
+      <div class="pb-row"><span class="k">Type</span><span class="v">Solo/group practices, dental, therapy, urgent care</span></div>
+      <div class="pb-row"><span class="k">Size</span><span class="v">1-20 employees</span></div>
+      <div class="pb-row"><span class="k">Revenue</span><span class="v">Under $5M</span></div>
+      <div class="pb-row"><span class="k">Compliance maturity</span><span class="v">Nothing, or "we have a binder somewhere"</span></div>
+      <div class="pb-row"><span class="k">Key product</span><span class="v">SPSRA ($499/yr) + Medcurity Academy</span></div>
+      <div class="pb-row"><span class="k">Price advantage</span><span class="v" style="color:var(--green)">3.6x cheaper than Accountable HQ</span></div>
+    </div>
+    <div class="pb-card">
+      <h3>Tier 2: Business Associates</h3>
+      <div class="pb-sub">Secondary ICP &mdash; Winnable</div>
+      <div class="pb-row"><span class="k">Type</span><span class="v">IT vendors, billing companies, healthcare SaaS</span></div>
+      <div class="pb-row"><span class="k">Size</span><span class="v">20-200 employees</span></div>
+      <div class="pb-row"><span class="k">Why they fit</span><span class="v">Need HIPAA to win/retain healthcare clients</span></div>
+      <div class="pb-row"><span class="k">Watch out</span><span class="v">May also need SOC 2 (Vanta/Drata territory)</span></div>
+    </div>
+    <div class="pb-card">
+      <h3>Tier 2: Large Health Systems</h3>
+      <div class="pb-sub">Secondary ICP &mdash; Long Cycle</div>
+      <div class="pb-row"><span class="k">Type</span><span class="v">Regional hospital systems, IDNs</span></div>
+      <div class="pb-row"><span class="k">Size</span><span class="v">500-5,000+ employees</span></div>
+      <div class="pb-row"><span class="k">Why they fit</span><span class="v">Dissatisfied with Intraprise post-acquisition</span></div>
+      <div class="pb-row"><span class="k">Watch out</span><span class="v">Long sales cycles, may need Dynamic Template features</span></div>
+    </div>
+  </div>
+
+  <div class="section-hdr">Buyer Personas</div>
+  <div class="persona-grid">
+    <div class="persona-card"><h4>The Overwhelmed Compliance Officer</h4><div class="p-role">Primary Champion</div><p>Wears 3+ hats. Knows they need a better SRA but lacks time and tools. Fears personal liability. Wants someone to tell them exactly what to do.</p></div>
+    <div class="persona-card"><h4>The Protective IT Director</h4><div class="p-role">Technical Evaluator</div><p>Cares about actual security, not compliance theater. Wants NVA + SRA together. Needs to present risk posture to leadership.</p></div>
+    <div class="persona-card"><h4>The Risk-Averse CEO</h4><div class="p-role">Decision Maker</div><p>Reads about breaches in the news. Doesn't want to be next. Needs simple ROI explanation. "Are we protected?"</p></div>
+    <div class="persona-card"><h4>The Small Practice Owner</h4><div class="p-role">SPSRA Target &middot; Tier 1B</div><p>Dentist, therapist, or physician running 1-20 person practice. Budget-conscious. SPSRA at $499/yr is their entry point.</p></div>
+    <div class="persona-card"><h4>The Office Manager</h4><div class="p-role">SPSRA User &middot; Tier 1B</div><p>Does everything. Handles billing, HR, IT, compliance. Needs something simple that doesn't require a compliance background.</p></div>
+    <div class="persona-card"><h4>The New Leader</h4><div class="p-role">Change Agent</div><p>Recently hired. Wants to professionalize operations. Has budget authority. Our best inbound signal.</p></div>
+  </div>
+
+  <div class="section-hdr">Medcurity Product Suite</div>
+  <div class="playbook-grid">
+    <div class="pb-card">
+      <h3>Core Products</h3>
+      <div class="pb-sub">What we sell</div>
+      <div class="pb-row"><span class="k">SRA</span><span class="v">AI-powered Security Risk Analysis (custom pricing)</span></div>
+      <div class="pb-row"><span class="k">SPSRA</span><span class="v">Small Practice SRA &mdash; $499/year (1-20 employees)</span></div>
+      <div class="pb-row"><span class="k">NVA</span><span class="v">Network Vulnerability Assessment (Basic &amp; Advanced)</span></div>
+      <div class="pb-row"><span class="k">Training</span><span class="v">Medcurity Academy LMS &mdash; role-specific HIPAA training</span></div>
+    </div>
+    <div class="pb-card">
+      <h3>Supporting Products</h3>
+      <div class="pb-sub">Complete the suite</div>
+      <div class="pb-row"><span class="k">Vendor Management</span><span class="v">BAA tracking &amp; vendor risk management</span></div>
+      <div class="pb-row"><span class="k">SAFER EHR</span><span class="v">EHR Self-Assessment tool</span></div>
+      <div class="pb-row"><span class="k">Policy Library</span><span class="v">Custom HIPAA policy templates</span></div>
+      <div class="pb-row"><span class="k">Partnerships</span><span class="v">Partnership program for resellers/consultants</span></div>
+    </div>
+  </div>
+
+  <div class="section-hdr">Disqualification Criteria</div>
+  <div class="playbook-grid">
+    <div class="pb-card" style="border-color:rgba(239,68,68,.2)">
+      <h3 style="color:#ef4444">Non-Healthcare / No PHI</h3>
+      <p style="font-size:12px;color:var(--text2);line-height:1.5">Organizations that don't handle Protected Health Information. Common misfits: general IT firms, wellness-only apps, fitness companies.</p>
+    </div>
+    <div class="pb-card" style="border-color:rgba(239,68,68,.2)">
+      <h3 style="color:#ef4444">Multi-Framework Primary Need</h3>
+      <p style="font-size:12px;color:var(--text2);line-height:1.5">If SOC 2 + ISO 27001 is primary and HIPAA is secondary, they'll likely end up with Vanta or Drata. Qualify early.</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+// ===== COMMAND_DATA_START =====
+const COMMAND_DATA = {
+  meta: { lastUpdated: "2026-03-11", nextScan: "2026-03-17T07:00" },
+  competitors: [
+    { id:"compliancy", name:"Compliancy Group", threat:"high", color:"var(--red)", sub:"Founded 2005 &middot; 'The Guard' &middot; G2 #1 Healthcare Compliance", stats:[{v:"20+",l:"Years"},{v:"4.7/5",l:"G2 Rating"},{v:"$99+",l:"Starting/mo"}], quick:"Direct competitor. 20+ years in market, G2 #1 rated. 90+ training courses, multi-framework (HIPAA+OSHA+SOC2). <strong>We're 4x cheaper for small practices</strong> ($499/yr vs their $2,148/yr for 10 employees).",
+      win:["<strong>Small practice price dominance:</strong> SPSRA $499/yr vs their $99/mo + $8/employee. For 10 employees: $2,148/yr vs $499. 4x cheaper.","<strong>AI-powered SRA:</strong> Our AI engine vs their manual, template-driven approach.","<strong>Full product suite:</strong> SRA + SPSRA + NVA + Training (Medcurity Academy) + Vendor Management + BAA Tracking + SAFER EHR + Policy Library.","<strong>Expert guidance included:</strong> They charge extra for support or require Elite tier.","<strong>Modern technology:</strong> AI-first (2018) vs legacy (2005). Better UX, faster updates.","<strong>NVA integration:</strong> Combined SRA + NVA. They don't offer NVA.","<strong>2026 HIPAA Rule readiness:</strong> Built for new mandatory requirements."],
+      lose:["<strong>Brand tenure:</strong> 20+ years vs our newer entry.","<strong>G2 #1 badge:</strong> Top spot in healthcare compliance category.","<strong>Training library:</strong> 90+ courses with SCORM. Broader catalog (though ours is newer/role-specific).","<strong>Trust Badge/Seal:</strong> Live website badge. No equivalent from us.","<strong>Multi-framework:</strong> HIPAA + OSHA + SOC 2 in one platform.","<strong>Association endorsements:</strong> ADA, APA, AAP all endorse them."],
+      objections:[{q:"They're G2 #1. Why go with you?",a:"G2 measures breadth of adoption, not depth. They're a generalist. We're HIPAA specialists with AI-powered quantitative NIST-aligned scoring the 2026 rules require."},{q:"They've been around 20 years.",a:"In cybersecurity, newest tech wins. Our platform was built in the AI era. Their 20-year head start means 20 years of technical debt."},{q:"We need OSHA too, not just HIPAA.",a:"Get the highest-risk thing right first with a specialist. A HIPAA breach costs millions. Layer OSHA tools separately."},{q:"Their Seal of Compliance badge matters.",a:"A badge doesn't protect you in an OCR audit. A thorough, quantitative SRA does. That's what we deliver."}],
+      landmines:["Ask them how their SRA handles quantitative risk scoring aligned with NIST SP 800-30. The 2026 rule makes this mandatory.","Ask to break down total cost with per-employee fees, Incident Management ($399/mo extra), Advanced Program Library ($299/mo extra). Base price looks low but total climbs fast.","Ask if you get a dedicated compliance expert, or if that's only at Elite tier."]
+    },
+    { id:"accountable", name:"Accountable HQ", threat:"moderate", color:"var(--green)", sub:"'Most trusted HIPAA certification' &middot; 10K+ companies &middot; SMB focus", stats:[{v:"10K+",l:"Companies"},{v:"$149",l:"Starting/mo"},{v:"30 days",l:"Compliance claim"}], quick:"<strong style='color:var(--green)'>We now massively undercut them on price.</strong> Our SPSRA is $499/yr vs their $149/mo ($1,788/yr). 3.6x cheaper AND deeper. The competitive dynamic has flipped.",
+      win:["<strong>PRICE &mdash; we're cheaper:</strong> SPSRA $499/yr vs $149/mo = $1,788/yr. 3.6x less expensive. Our biggest weapon.","<strong>AI-powered SRA depth:</strong> Quantitative NIST-aligned analysis vs their questionnaire-based approach.","<strong>HIPAA Training (Medcurity Academy):</strong> Role-specific LMS competing with their $25/employee model.","<strong>Expert guidance:</strong> Compliance experts included. They're self-serve.","<strong>OCR audit defensibility:</strong> Built for OCR scrutiny. 30-day 'certification' raises auditor red flags.","<strong>Full product suite:</strong> SRA + NVA + Training + Vendor Management + SAFER + Policy Library.","<strong>NVA:</strong> We offer NVA (Basic & Advanced). They don't."],
+      lose:["<strong>Speed claim:</strong> 30-day certification. Fast but shallow.","<strong>Self-serve simplicity:</strong> Low learning curve, intuitive UI.","<strong>Free tier:</strong> $0/mo training-only is a funnel hook we don't have.","<strong>Customer count:</strong> 10K+ companies = social proof at scale.","<strong>Multi-framework:</strong> HIPAA + OSHA in one platform."],
+      objections:[{q:"Accountable is cheaper.",a:"Actually we're significantly less. SPSRA is $499/year. Their Essentials is $149/month = $1,788/year. Over 3x what we charge. AND our SRA is deeper with NIST-aligned scoring and expert guidance."},{q:"They say 30-day compliance.",a:"Compliant on paper or actually secure? OCR doesn't care about certificates. They care about thorough risk analysis and documented remediation."},{q:"We're too small for anything fancy.",a:"That's exactly who SPSRA was built for. $499/year for 1-20 employees. Pair with Medcurity Academy for training. Complete HIPAA program for less than competitors charge for SRA alone."},{q:"10,000 companies use them.",a:"Adoption doesn't equal protection. Ask how their SRA holds up in an actual OCR audit. Our clients have quantitative risk documentation auditors respect."}],
+      landmines:["Compare actual annual costs, not monthly stickers. SPSRA $499/yr vs their monthly + per-employee add-ons.","Ask what happens after the SRA. Who interprets findings? Who builds remediation? If 'you do,' that's not simplicity &mdash; that's abandonment."]
+    },
+    { id:"vanta", name:"Vanta", threat:"high", color:"var(--purple)", sub:"$220M+ ARR &middot; 12K+ customers &middot; 35+ frameworks &middot; 375+ integrations", stats:[{v:"$220M+",l:"ARR"},{v:"35+",l:"Frameworks"},{v:"$10K+",l:"HIPAA/yr"}], quick:"The 800-pound gorilla of compliance automation. Generalist that happens to offer HIPAA as one of 35+ frameworks. They dominate tech companies doing SOC 2 + HIPAA combos. <strong>We win on healthcare expertise and small practice accessibility.</strong>",
+      win:["<strong>HIPAA is our only job:</strong> Every decision optimized for HIPAA vs one of 35 frameworks.","<strong>Small practice accessibility:</strong> SPSRA $499/yr. Vanta's $10K minimum excludes small healthcare entirely.","<strong>Healthcare-native expertise:</strong> Founded by healthcare compliance pros vs tech startup origin.","<strong>Expert guidance included:</strong> Compliance experts walk alongside you. Vanta is self-serve.","<strong>Complete healthcare suite:</strong> SRA + SPSRA + NVA + Training + Vendor Mgmt + SAFER + Policy Library.","<strong>OCR-ready output:</strong> SRA formatted for OCR with NIST SP 800-30 scoring. Vanta's is generic.","<strong>NVA:</strong> Combined SRA + NVA. Vanta doesn't do NVAs."],
+      lose:["<strong>Multi-framework:</strong> SOC 2 + ISO 27001 + HIPAA + PCI in one. Can't match breadth.","<strong>375+ integrations:</strong> Auto evidence collection at scale.","<strong>Brand momentum:</strong> $220M ARR, IDC leader. 'Safe choice.'","<strong>HealthTech appeal:</strong> Startups on Vanta for SOC 2 add HIPAA within same platform.","<strong>SEO domination:</strong> 180+ pages, $128K/month organic traffic value."],
+      objections:[{q:"Already on Vanta for SOC 2, add HIPAA there.",a:"Makes sense if HIPAA is just a checkbox. For healthcare orgs, HIPAA is the core of patient trust. Vanta collects evidence but can't guide you through an OCR investigation."},{q:"375 integrations vs yours.",a:"How many are relevant to a hospital? Most connect to dev tools. HIPAA compliance is about risk analysis and expert interpretation, not tech stack evidence."},{q:"Vanta is the safe choice, market leader.",a:"Market leader in multi-framework for tech companies. Not the leader in healthcare HIPAA. Different market, different needs."},{q:"Their pricing is competitive.",a:"Starting $10K/yr, scales to $25K at 200 employees. For HIPAA-only, every dollar at Vanta subsidizes 34 frameworks you don't need."}],
+      landmines:["Ask to see a sample SRA report. Compare depth of NIST-aligned scoring vs evidence screenshots.","Ask how many of their 12K customers are healthcare delivery organizations (hospitals, clinics) vs tech companies."]
+    },
+    { id:"drata", name:"Drata", threat:"moderate", color:"var(--cyan)", sub:"$100M+ ARR &middot; 8K+ customers &middot; 'Trust Management Platform' &middot; G2 Leader 14 quarters", stats:[{v:"$100M+",l:"ARR"},{v:"20+",l:"Frameworks"},{v:"$7.5K",l:"Starting/yr"}], quick:"Vanta's main competitor, not ours. Multi-framework for tech companies. We encounter them when HealthTech orgs evaluate 'compliance platforms' broadly. <strong>Their $7.5K starting price still can't touch our SPSRA at $499/yr.</strong>",
+      win:["<strong>HIPAA-first depth:</strong> Everything we build is for HIPAA. Their HIPAA is one of 20+ frameworks.","<strong>Accessible at every size:</strong> SPSRA $499/yr. Drata's $7.5K doesn't make sense for small healthcare.","<strong>Healthcare expertise:</strong> Our team from healthcare vs their team from tech.","<strong>Expert guidance:</strong> Their docs 'assume existing GRC knowledge.'","<strong>Complete suite:</strong> SRA + SPSRA + NVA + Training + Vendor Mgmt + SAFER + Policy Library.","<strong>No implementation surprise:</strong> Their $25K implementation fee shocks prospects. We include onboarding."],
+      lose:["<strong>Continuous monitoring:</strong> Real-time control monitoring with hourly tests.","<strong>Multi-framework cross-mapping:</strong> One control maps to SOC 2, ISO, HIPAA, PCI simultaneously.","<strong>Developer-centric:</strong> CI/CD pipeline integration appeals to HealthTech engineering.","<strong>Lower starting price vs Vanta:</strong> $7.5K foundation tier.","<strong>Global scale:</strong> 80+ countries, multi-language."],
+      objections:[{q:"Drata's continuous monitoring is more modern.",a:"Monitoring tech controls is valuable. But HIPAA is about risk analysis, workforce training, physical safeguards, admin procedures, BA management. Drata monitors your stack. We manage your entire HIPAA program."},{q:"Drata is cheaper at $7,500.",a:"That's Foundation for startups. Add HIPAA framework, healthcare config, implementation ($25K extra). Ask for a fully loaded quote."},{q:"300+ integrations.",a:"How many relevant to a healthcare org? Most connect to GitHub, AWS, Okta. We integrate where healthcare actually needs it."},{q:"G2 rating (4.8) is higher.",a:"Read the reviews closely: mostly tech companies doing SOC 2. HIPAA-specific feedback mentions significant manual customization needed."}],
+      landmines:["Ask for a quote including: tier, HIPAA add-on, implementation, vendor risk module, trust center. $7.5K is the starting point, not destination.","Ask to see a sample HIPAA SRA report from a hospital, not a tech company."]
+    },
+    { id:"intraprise", name:"Intraprise Health", threat:"critical", color:"var(--orange)", sub:"Acquired by Health Catalyst ($43M) &middot; 64K+ providers &middot; KLAS #1 Cybersecurity", stats:[{v:"64K+",l:"Providers"},{v:"$43M",l:"Acquisition"},{v:"KLAS #1",l:"Ranking"}], quick:"Most dangerous direct competitor. Healthcare-focused, SRA-centric, compliance expertise. <strong>Our advantage: AI-native, modern UX, small practice market (SPSRA), and post-acquisition disruption uncertainty.</strong>",
+      win:["<strong>AI-native platform:</strong> Built with AI from ground up vs their post-acquisition bolt-on.","<strong>Small practice market:</strong> SPSRA $499/yr opens segment Intraprise doesn't serve. They're enterprise-only.","<strong>Modern UX:</strong> Their reviews flag UI/UX issues, confusing navigation.","<strong>Implementation speed:</strong> Their enterprise: 4-6 months. We're much faster.","<strong>Complete suite:</strong> SRA + SPSRA + NVA + Training + Vendor Mgmt + SAFER + Policy Library. No enterprise sales cycles.","<strong>Post-acquisition disruption:</strong> Leadership changes, roadmap uncertainty, team turnover.","<strong>Pricing transparency:</strong> SPSRA $499/yr published. They require a sales call."],
+      lose:["<strong>Enterprise scale:</strong> 64K+ providers, KLAS #1, Black Book #2.","<strong>Dynamic Templates:</strong> Parent-child assessment for multi-entity health systems.","<strong>Breadth:</strong> PBRA, NIST CSF, HITRUST, vCISO services.","<strong>Health Catalyst backing:</strong> $43M acquisition = real resources and enterprise sales.","<strong>Managed services:</strong> Hybrid and fully-managed compliance services.","<strong>Book of Evidence:</strong> Documentation system auditors know.","<strong>25+ years of relationships:</strong> Deep institutional ties."],
+      objections:[{q:"64K providers and KLAS #1.",a:"Scale doesn't equal fit. They're built for large systems with 4-6 month implementations. If you're a community hospital or FQHC, you're paying for enterprise complexity you don't need."},{q:"Health Catalyst acquisition = more resources.",a:"Also means product roadmap influenced by a data analytics company's priorities. Ask: what's the 2026 HIPAA roadmap specifically? Is the original team still in place?"},{q:"Dynamic Templates are exactly what we need.",a:"Powerful for very large systems with dozens of entities. For most multi-site orgs (2-15 locations), our platform handles it without enterprise template overhead."},{q:"They claim 80% faster SRA, 100% OCR acceptance.",a:"80% faster than what? A spreadsheet? More important: how thorough is the assessment? Does it produce quantitative NIST-aligned scores?"}],
+      landmines:["Ask about implementation timeline. If 4-6 months with dedicated IT resources, is that proportionate to your org size?","Ask about the Health Catalyst acquisition: original team intact? Product roadmap changed? HIPAA still priority #1?","Ask for a hands-on demo. Navigate remediation workflow yourself. Check question grouping."]
+    }
+  ],
+  breaches: [
+    {name:"Community Health Action of Staten Island",loc:"Staten Island, NY",date:"Feb 2026",affected:"60,000+",type:"Ransomware (GENESIS)",detail:"Data exfiltrated: SSNs, driver's licenses, insurance info, medical records. Genesis ransomware group leaked data in late February.",action:"FQHC/community health center. In crisis mode. Reach out with 'we help organizations rebuild compliance after incidents.'",sev:"hot"},
+    {name:"Valley Radiology Consultants",loc:"San Diego, CA",date:"Mar 2026",affected:"Pending",type:"Unauthorized network access",detail:"Unauthorized access Sept 2025, file review completed Feb 2026. Patient demographic and clinical data exposed.",action:"Specialty practice (radiology). Needs SRA urgently. Pitch SPSRA or core SRA depending on size.",sev:"hot"},
+    {name:"360 Dental PC",loc:"Philadelphia, PA",date:"Jan 2026",affected:"11,273",type:"Ransomware",detail:"Server breach Nov 2025. SSNs, dental/clinical records, insurance info, appointment data exposed.",action:"Dental practice. Perfect SPSRA target. Lead with $499/yr pricing and Medcurity Academy for staff training.",sev:"hot"},
+    {name:"MACT Health Board",loc:"Mariposa County, CA",date:"Jan 2026",affected:"Pending",type:"Ransomware (INC/Rhysida)",detail:"Unauthorized access Nov 12-20, 2025. Serves American Indian/Alaskan Native population. SSNs, medical info exposed.",action:"Tribal health org. Medcurity already serves Native Health. Lead with that reference. Tier 2 ICP match.",sev:"hot"},
+    {name:"Insight Hospital & Medical Center",loc:"Chicago, IL",date:"Feb 2026",affected:"360 GB exfiltrated",type:"Ransomware (LockBit5/Termite)",detail:"Two ransomware groups claimed responsibility. Unauthorized access Aug-Sept 2025. 360 GB leaked Feb 2026.",action:"Hospital. Mid-market Tier 1A target. Emphasize AI-powered SRA depth and OCR defensibility.",sev:"hot"},
+    {name:"True Dental Care for Kids & Adults",loc:"Pennsylvania",date:"Apr 2025",affected:"17,640",type:"Ransomware",detail:"Hackers encrypted files and exfiltrated patient data. Practice recovered from backups without paying ransom.",action:"Dental practice. Post-breach they need ongoing compliance. SPSRA + Training is the pitch.",sev:"warm"},
+    {name:"Chord Specialty Dental Partners",loc:"Multi-state (TN, IN, DE, NJ, PA, VA)",date:"Mar 2025",affected:"173,430",type:"Email compromise",detail:"Unauthorized email access Aug-Sept 2024. Supports 60+ dental practices. SSNs, bank info, medical info exposed.",action:"Dental management group. Large target. 60+ practices = potential for both core SRA and SPSRA across locations.",sev:"warm"},
+    {name:"Western Montana Mental Health Center",loc:"Montana (15 locations)",date:"Jul 2025",affected:"86,758",type:"Unauthorized access",detail:"Initial breach Sept 2024. Inc Ransom group demanded payment. Medical records, SSNs, financial info exposed.",action:"Mental health, multi-location. Perfect Tier 1A. Emphasize year-round remediation tracking and training.",sev:"warm"},
+    {name:"Community Health Center, Inc.",loc:"Connecticut",date:"Jan 2025",affected:"1,060,936",type:"Unauthorized intrusion",detail:"Breach began mid-Oct 2024. Attackers had access 2+ months. SSNs, diagnoses, treatment info exposed.",action:"Community health center. Over 1M affected. Enterprise conversation but good case study reference.",sev:"warm"},
+    {name:"DaVita",loc:"Denver, CO",date:"Apr 2025",affected:"2,689,826",type:"Ransomware (Interlock)",detail:"1,510 GB stolen. Demographics, insurance, clinical info including dialysis lab results. Patient care continued.",action:"Large enterprise. Out of typical ICP but demonstrates market urgency for content/thought leadership.",sev:"cool"}
+  ],
+  jobSignals: [
+    {org:"GeneDx",role:"Director, Data Privacy Officer",loc:"Remote/Hybrid",detail:"Leading healthcare data privacy program. HIPAA, HITECH, GDPR compliance.",sev:"warm"},
+    {org:"GeneDx",role:"Senior Manager, Healthcare Compliance",loc:"Remote/Hybrid",detail:"CLIA, HIPAA, CMS, OIG compliance in laboratory operations.",sev:"warm"},
+    {org:"HealthEquity",role:"Director, Privacy Program",loc:"Draper, UT / Irving, TX / Remote",detail:"Operational leader of privacy program.",sev:"warm"},
+    {org:"BerryDunn",role:"HIPAA Privacy Officer",loc:"Portland, ME area",detail:"Healthcare consulting firm. Salary: $100K-$125K.",sev:"warm"},
+    {org:"Pacific Clinics",role:"Healthcare Privacy/Compliance (multiple)",loc:"California",detail:"California's largest behavioral/mental health provider. 97+ open positions.",sev:"hot"},
+    {org:"World Relief",role:"Healthcare Privacy/Compliance Officer",loc:"Multiple",detail:"International humanitarian org. 49+ job openings.",sev:"warm"}
+  ],
+  competitorAlerts: []
+};
+// ===== COMMAND_DATA_END =====
+
+// Tab navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(item.dataset.tab).classList.add('active');
+  });
+});
+
+// Build Mission Control feed
+function buildFeed() {
+  const feed = document.getElementById('activity-feed');
+  let items = [];
+  COMMAND_DATA.breaches.forEach(b => items.push({type:'breach',icon:'!',title:`Breach: ${b.name}`,desc:`${b.affected} affected &mdash; ${b.type}`,time:b.date,sev:b.sev}));
+  COMMAND_DATA.jobSignals.forEach(j => items.push({type:'signal',icon:'H',title:`Hiring: ${j.org}`,desc:`${j.role} &mdash; ${j.loc}`,time:'Active',sev:j.sev}));
+  feed.innerHTML = items.map(i => `
+    <div class="feed-item" onclick="switchToRadar()">
+      <div class="fi-icon ${i.type}">${i.icon}</div>
+      <div class="fi-body"><div class="fi-title">${i.title}</div><div class="fi-desc">${i.desc}</div></div>
+      <div class="fi-sev sev-${i.sev}">${i.sev}</div>
+      <div class="fi-time">${i.time}</div>
+    </div>`).join('');
+}
+
+function switchToRadar() {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('[data-tab="radar"]').classList.add('active');
+  document.getElementById('radar').classList.add('active');
+}
+
+// Build Battleground
+function buildBattleground() {
+  const grid = document.getElementById('comp-grid');
+  grid.innerHTML = COMMAND_DATA.competitors.map(c => `
+    <div class="comp-card" onclick="toggleDetail('${c.id}')">
+      <div class="cc-header">
+        <div><div class="cc-name">${c.name}</div><div class="cc-sub">${c.sub}</div></div>
+        <div class="threat-pill ${c.threat}">${c.threat}</div>
+      </div>
+      <div class="cc-stats">${c.stats.map(s => `<div class="cc-stat"><div class="v">${s.v}</div><div class="l">${s.l}</div></div>`).join('')}</div>
+      <div class="cc-quick">${c.quick}</div>
+      <div class="cc-expand">Click to expand full battlecard</div>
+    </div>`).join('');
+}
+
+function toggleDetail(id) {
+  const el = document.getElementById('comp-detail');
+  const c = COMMAND_DATA.competitors.find(x => x.id === id);
+  if (el.dataset.open === id) { el.innerHTML = ''; el.dataset.open = ''; return; }
+  el.dataset.open = id;
+  el.innerHTML = `
+    <div class="detail-panel open">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h3>${c.name} &mdash; Full Battlecard</h3>
+        <button class="close-btn" onclick="document.getElementById('comp-detail').innerHTML='';document.getElementById('comp-detail').dataset.open=''">Close</button>
+      </div>
+      <div class="dp-grid">
+        <div class="dp-col"><h4 class="win">Where We Win</h4><ul>${c.win.map(w => `<li>${w}</li>`).join('')}</ul></div>
+        <div class="dp-col"><h4 class="lose">Where They Beat Us</h4><ul>${c.lose.map(l => `<li>${l}</li>`).join('')}</ul></div>
+      </div>
+      <h4 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--yellow);margin:20px 0 10px">Objection Handling</h4>
+      <div class="objection-row">${c.objections.map(o => `<div class="obj-card"><div class="q">"${o.q}"</div><div class="a">${o.a}</div></div>`).join('')}</div>
+      <h4 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin:20px 0 10px">Landmines to Plant</h4>
+      <ul style="list-style:none">${c.landmines.map(l => `<li style="font-size:12px;color:var(--text2);padding:8px 0;border-bottom:1px solid var(--border);line-height:1.5">${l}</li>`).join('')}</ul>
+    </div>`;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Build Radar
+function buildRadar() {
+  const cols = document.getElementById('radar-cols');
+  const breaches = COMMAND_DATA.breaches;
+  const signals = COMMAND_DATA.jobSignals;
+  cols.innerHTML = `
+    <div class="radar-col">
+      <h3 style="color:var(--red)">HHS Breaches <span class="cnt">${breaches.length}</span></h3>
+      ${breaches.map((b,i) => `
+        <div class="radar-card" onclick="this.classList.toggle('expanded')">
+          <div class="rc-top"><div><div class="rc-name">${b.name}</div><div class="rc-loc">${b.loc}</div></div><div class="fi-sev sev-${b.sev}">${b.sev}</div></div>
+          <div class="rc-meta"><span class="rc-tag">${b.affected} affected</span><span class="rc-tag">${b.type}</span><span class="rc-tag">${b.date}</span></div>
+          <div class="radar-expand">
+            <div class="rc-detail">${b.detail}</div>
+            <div class="rc-action"><strong>Outreach angle:</strong> ${b.action}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="radar-col">
+      <h3 style="color:var(--yellow)">Hiring Signals <span class="cnt">${signals.length}</span></h3>
+      ${signals.map(j => `
+        <div class="radar-card" onclick="this.classList.toggle('expanded')">
+          <div class="rc-top"><div><div class="rc-name">${j.org}</div><div class="rc-loc">${j.loc}</div></div><div class="fi-sev sev-${j.sev}">${j.sev}</div></div>
+          <div class="rc-meta"><span class="rc-tag">${j.role}</span></div>
+          <div class="radar-expand">
+            <div class="rc-detail">${j.detail}</div>
+            <div class="rc-action"><strong>Outreach angle:</strong> Budget allocated, pain acknowledged. Reach new hire 30 days after start with "help you hit the ground running" messaging.</div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="radar-col">
+      <h3 style="color:var(--purple)">Competitor Moves <span class="cnt">${COMMAND_DATA.competitorAlerts.length}</span></h3>
+      <div class="radar-card"><div class="rc-name" style="color:var(--text3)">No competitor alerts yet</div><div class="rc-detail" style="margin-top:8px">Competitor website monitoring will populate this column. Scheduled scans check for pricing changes, new features, new content, and messaging updates across all 5 competitors every Tuesday at 7 AM.</div></div>
+    </div>`;
+}
+
+// Arsenal - Objection Handler
+function showObjections() {
+  const id = document.getElementById('obj-select').value;
+  const out = document.getElementById('obj-output');
+  if (!id) { out.innerHTML = '<p style="color:var(--text3)">Select a competitor above.</p>'; return; }
+  const c = COMMAND_DATA.competitors.find(x => x.id === id);
+  out.innerHTML = `
+    <h4>Objection Responses vs ${c.name}</h4>
+    ${c.objections.map(o => `<p><strong style="color:var(--yellow)">"${o.q}"</strong><br>${o.a}</p>`).join('')}
+    <h4>Landmines to Plant</h4>
+    ${c.landmines.map(l => `<p>${l}</p>`).join('')}`;
+}
+
+// Arsenal - Pricing Calculator
+function calcPricing() {
+  const n = parseInt(document.getElementById('emp-count').value) || 10;
+  const out = document.getElementById('pricing-output');
+  const medcurity = n <= 20 ? 499 : null;
+  const accountable = 149 * 12 + (25 * n);
+  const compliancy = 99 * 12 + (8 * n * 12);
+  const vanta = Math.max(10000, n * 200);
+  const drata = Math.max(7500, n * 150) + 25000;
+  out.innerHTML = `
+    <h4>Annual Cost Comparison (${n} employees)</h4>
+    ${medcurity ? `<p><strong style="color:var(--green)">Medcurity SPSRA: $${medcurity}/yr</strong> (1-20 employees)</p>` : `<p><strong style="color:var(--green)">Medcurity SRA: Custom pricing</strong> (contact sales)</p>`}
+    <p><strong>Accountable HQ:</strong> ~$${accountable.toLocaleString()}/yr ($149/mo + $25/employee training)${medcurity ? ` &mdash; <strong style="color:var(--red)">${(accountable/medcurity).toFixed(1)}x more expensive</strong>` : ''}</p>
+    <p><strong>Compliancy Group:</strong> ~$${compliancy.toLocaleString()}/yr ($99/mo + $8/employee/mo Foundation)${medcurity ? ` &mdash; <strong style="color:var(--red)">${(compliancy/medcurity).toFixed(1)}x more expensive</strong>` : ''}</p>
+    <p><strong>Vanta:</strong> ~$${vanta.toLocaleString()}/yr (estimated, HIPAA tier)</p>
+    <p><strong>Drata:</strong> ~$${drata.toLocaleString()}/yr (estimated with $25K implementation)</p>
+    <p style="margin-top:12px;color:var(--text3);font-size:11px">Estimates based on published pricing and industry data. Actual pricing may vary.</p>`;
+}
+
+// Copy to clipboard
+function copyText(btn) {
+  const text = btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(text).then(() => { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy to clipboard', 2000); });
+}
+
+// Initialize
+buildFeed();
+buildBattleground();
+buildRadar();
+calcPricing();
+</script>
+</body>
+</html>
