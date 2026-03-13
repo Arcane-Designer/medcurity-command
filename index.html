@@ -45,10 +45,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .breadcrumb-nav .breadcrumb-item.active{color:var(--red);font-weight:600}
 .breadcrumb-nav .breadcrumb-sep{color:var(--text3)}
 
-/* Tab System */
-.tab{display:none;animation:fadeIn .3s ease}
-.tab.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)};to{opacity:1;transform:translateY(0)}}
+/* Tab System — see IMPROVED TAB TRANSITIONS at bottom */
 
 /* Page Title & Subtitle */
 .page-title{font-size:32px;font-weight:900;color:#fff;margin-bottom:8px}
@@ -391,6 +388,54 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .roi-card{transition:all .3s ease}
 .roi-card:hover{border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .pitch-box{transition:all .3s cubic-bezier(.4,0,.2,1)}
+
+/* ===== COMMAND PALETTE ===== */
+.cmd-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:2000;align-items:flex-start;justify-content:center;padding-top:min(20vh,160px)}
+.cmd-overlay.active{display:flex}
+.cmd-box{width:600px;max-width:90vw;background:var(--surface);border:1px solid var(--border2);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.5);overflow:hidden;animation:cmdIn .2s ease}
+@keyframes cmdIn{from{opacity:0;transform:translateY(-20px) scale(.97)};to{opacity:1;transform:translateY(0) scale(1)}}
+.cmd-input-wrap{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.cmd-input-wrap .cmd-icon{font-size:18px;color:var(--text3);flex-shrink:0}
+.cmd-input{flex:1;background:none;border:none;color:#fff;font-family:inherit;font-size:15px;font-weight:500;outline:none}
+.cmd-input::placeholder{color:var(--text3)}
+.cmd-kbd{font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:inherit;flex-shrink:0}
+.cmd-results{max-height:360px;overflow-y:auto;padding:8px}
+.cmd-results:empty::after{content:'Type to search across all tabs...';display:block;padding:20px;text-align:center;color:var(--text3);font-size:13px}
+.cmd-result{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;cursor:pointer;transition:all .15s}
+.cmd-result:hover,.cmd-result.selected{background:rgba(220,38,38,.08)}
+.cmd-result .cmd-r-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--surface2);border:1px solid var(--border)}
+.cmd-result .cmd-r-body{flex:1;min-width:0}
+.cmd-result .cmd-r-title{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmd-result .cmd-r-title mark{background:rgba(220,38,38,.25);color:var(--red);border-radius:2px;padding:0 2px}
+.cmd-result .cmd-r-sub{font-size:11px;color:var(--text3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmd-result .cmd-r-tag{font-size:9px;padding:2px 8px;border-radius:6px;background:var(--surface2);color:var(--text2);flex-shrink:0;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.cmd-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)}
+.cmd-footer span{display:flex;align-items:center;gap:4px}
+.cmd-footer kbd{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:inherit;font-size:10px}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:3000;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none}
+.toast{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;font-size:12px;font-weight:500;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;animation:toastIn .3s ease;pointer-events:auto;max-width:320px}
+.toast.out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95)};to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-8px) scale(.95)}}
+.toast .toast-icon{font-size:16px;flex-shrink:0}
+.toast .toast-bar{position:absolute;bottom:0;left:12px;right:12px;height:2px;background:var(--red);border-radius:1px;animation:toastTimer 2.5s linear forwards}
+@keyframes toastTimer{from{width:100%};to{width:0%}}
+
+/* ===== STICKY METRICS BAR ===== */
+.sticky-bar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 0;margin:-32px -32px 24px;padding:10px 32px;display:flex;align-items:center;gap:20px;backdrop-filter:blur(12px);background:rgba(10,10,10,.85)}
+.sticky-bar .sb-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)}
+.sticky-bar .sb-val{font-weight:800;font-size:13px}
+.sticky-bar .sb-val.red{color:var(--red)}.sticky-bar .sb-val.green{color:var(--green)}.sticky-bar .sb-val.yellow{color:var(--yellow)}.sticky-bar .sb-val.blue{color:var(--blue)}
+.sticky-bar .sb-sep{width:1px;height:16px;background:var(--border)}
+.sticky-bar .sb-cmd{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);cursor:pointer;padding:4px 10px;border-radius:6px;border:1px solid var(--border);transition:all .2s}
+.sticky-bar .sb-cmd:hover{border-color:var(--border2);color:var(--text2)}
+
+/* ===== IMPROVED TAB TRANSITIONS ===== */
+.tab{display:none;opacity:0;transform:translateY(8px)}
+.tab.active{display:block;animation:tabFadeIn .35s ease forwards}
+@keyframes tabFadeIn{from{opacity:0;transform:translateY(8px)};to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -446,7 +491,39 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <div class="tv-progress" id="tv-progress"></div>
 </div>
 
+<!-- Command Palette -->
+<div class="cmd-overlay" id="cmd-overlay" onclick="if(event.target===this)closeCmdPalette()">
+  <div class="cmd-box">
+    <div class="cmd-input-wrap">
+      <span class="cmd-icon">🔍</span>
+      <input class="cmd-input" id="cmd-input" placeholder="Search everything... competitors, breaches, personas, objections..." autocomplete="off">
+      <span class="cmd-kbd">ESC</span>
+    </div>
+    <div class="cmd-results" id="cmd-results"></div>
+    <div class="cmd-footer">
+      <span><kbd>↑↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
 <div class="main">
+
+<!-- Sticky Metrics Bar -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sb-item"><span class="sb-val red" id="sb-breaches">0</span> Hot Leads</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item"><span class="sb-val yellow" id="sb-signals">0</span> Signals</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item"><span class="sb-val green" id="sb-price">3.6x</span> Price Adv.</div>
+  <div class="sb-sep"></div>
+  <div class="sb-item"><span class="sb-val blue" id="sb-competitors">0</span> Competitors</div>
+  <div class="sb-cmd" onclick="openCmdPalette()">🔍 Search <kbd style="margin-left:4px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:inherit;font-size:10px">⌘K</kbd></div>
+</div>
 
 <!-- Breadcrumb Navigation -->
 <div class="breadcrumb-nav" id="breadcrumb-nav">
@@ -456,7 +533,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <!-- ==================== MISSION CONTROL ==================== -->
 <div class="tab active" id="mission-control">
   <div class="page-title">Mission Control</div>
-  <div class="page-sub">Your GTM intelligence at a glance. What changed, what matters, what to do next. <span style="color:var(--red);font-weight:700">Every minute counts.</span></div>
+  <div class="page-sub">Your GTM intelligence at a glance. What changed, what matters, what to do next.</div>
 
   <div class="stats-row">
     <div class="stat-card" onclick="switchToTab('radar')"><div class="stat-val red">10</div><div class="stat-lbl">Hot Leads (Breaches)</div></div>
@@ -1924,6 +2001,193 @@ togglePersona = function(id) {
 
 // Re-run builders with cross-links
 buildGapTable();
+
+// ===== TOAST NOTIFICATION SYSTEM =====
+function showToast(message, icon = '✓') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span class="toast-icon">${icon}</span>${message}<div class="toast-bar"></div>`;
+  container.appendChild(toast);
+  setTimeout(() => { toast.classList.add('out'); setTimeout(() => toast.remove(), 300); }, 2500);
+}
+
+// Replace all clipboard operations with toast
+const _origCopyOutreach = copyOutreachAngle;
+copyOutreachAngle = function(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('Outreach angle copied!', '📋'));
+};
+
+const _origCopyText = copyText;
+copyText = function(btn) {
+  const text = btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(text).then(() => { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy to clipboard', 2000); showToast('Copied to clipboard!', '📋'); });
+};
+
+const _origGenerateColdEmail = generateColdEmail;
+generateColdEmail = function(orgName) {
+  const email = `Subject: HIPAA Compliance Review for ${orgName}\n\nHi there,\n\nI wanted to reach out regarding HIPAA compliance at ${orgName}.\n\nGiven recent activity in your industry, now is an excellent time to ensure your risk assessment and security posture are up to date and OCR-defensible.\n\nWe work with organizations like yours to streamline compliance and prepare for regulatory scrutiny.\n\nWould you be open to a brief conversation?\n\nBest regards`;
+  navigator.clipboard.writeText(email).then(() => showToast(`Email template for ${orgName} copied!`, '✉️'));
+};
+
+const _origCopyEmail = copyEmailTemplate;
+copyEmailTemplate = function() {
+  const text = document.querySelector('#email-output pre')?.innerText;
+  if (text) {
+    navigator.clipboard.writeText(text).then(() => { showToast('Email template copied!', '✉️'); });
+  }
+};
+
+// ===== ANIMATED STAT COUNTERS =====
+function animateCounter(el, target, suffix = '', prefix = '') {
+  const isFloat = String(target).includes('.');
+  const duration = 1200;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = isFloat ? (target * eased).toFixed(1) : Math.round(target * eased);
+    el.textContent = prefix + current + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function runCounters() {
+  const statCards = document.querySelectorAll('#mission-control .stat-card .stat-val');
+  const targets = [{val:10,pre:'',suf:''},{val:6,pre:'',suf:''},{val:3.6,pre:'',suf:'x'},{val:5,pre:'',suf:''},{val:15,pre:'',suf:''},{val:499,pre:'$',suf:''}];
+  statCards.forEach((el, i) => {
+    if (targets[i]) animateCounter(el, targets[i].val, targets[i].suf, targets[i].pre);
+  });
+  // Sticky bar counters
+  animateCounter(document.getElementById('sb-breaches'), COMMAND_DATA.breaches.filter(b=>b.sev==='hot').length);
+  animateCounter(document.getElementById('sb-signals'), COMMAND_DATA.jobSignals.length);
+  animateCounter(document.getElementById('sb-competitors'), COMMAND_DATA.competitors.length);
+}
+setTimeout(runCounters, 200);
+
+// ===== COMMAND PALETTE =====
+let cmdSelectedIdx = -1;
+let cmdSearchIndex = [];
+
+function buildSearchIndex() {
+  cmdSearchIndex = [];
+  // Competitors
+  COMMAND_DATA.competitors.forEach(c => {
+    cmdSearchIndex.push({title: c.name, sub: c.sub, icon: '⚔️', tag: 'Battleground', action: () => { switchToTab('battleground'); setTimeout(() => toggleDetail(c.id), 300); }});
+    c.objections.forEach(o => {
+      cmdSearchIndex.push({title: `"${o.q}"`, sub: `Objection vs ${c.name} — ${o.a.substring(0,80)}...`, icon: '💬', tag: 'Objection', action: () => { switchToTab('battleground'); setTimeout(() => toggleDetail(c.id), 300); }});
+    });
+    c.landmines.forEach(l => {
+      cmdSearchIndex.push({title: l.substring(0, 60) + '...', sub: `Landmine vs ${c.name}`, icon: '💣', tag: 'Landmine', action: () => { switchToTab('battleground'); setTimeout(() => toggleDetail(c.id), 300); }});
+    });
+  });
+  // Breaches
+  COMMAND_DATA.breaches.forEach(b => {
+    cmdSearchIndex.push({title: b.name, sub: `${b.loc} — ${b.affected} affected — ${b.type}`, icon: '🚨', tag: 'Breach', action: () => switchToTab('radar')});
+  });
+  // Job signals
+  COMMAND_DATA.jobSignals.forEach(j => {
+    cmdSearchIndex.push({title: `${j.org} — ${j.role}`, sub: j.loc + ' — ' + j.detail.substring(0,60), icon: '📡', tag: 'Signal', action: () => switchToTab('radar')});
+  });
+  // Personas
+  COMMAND_DATA.personas.forEach(p => {
+    cmdSearchIndex.push({title: `${p.emoji} ${p.name}`, sub: p.summary.substring(0,80) + '...', icon: p.emoji, tag: 'Persona', action: () => { switchToTab('playbook'); setTimeout(() => togglePersona(p.id), 300); }});
+    p.objections.forEach(o => {
+      cmdSearchIndex.push({title: `"${o.q}"`, sub: `${p.name} objection — ${o.a.substring(0,60)}...`, icon: '🗣️', tag: 'Persona Obj.', action: () => { switchToTab('playbook'); setTimeout(() => togglePersona(p.id), 300); }});
+    });
+    p.convoStarters.forEach(c => {
+      cmdSearchIndex.push({title: c, sub: `Conversation starter for ${p.name}`, icon: '💡', tag: 'Opener', action: () => { switchToTab('playbook'); setTimeout(() => { togglePersona(p.id); setTimeout(() => showPersonaTab(p.id, 'selling', document.querySelector('.pd-tab:last-of-type')), 200); }, 300); }});
+    });
+  });
+  // Content gaps
+  COMMAND_DATA.contentGaps.forEach(g => {
+    cmdSearchIndex.push({title: g.topic, sub: `${g.pri.toUpperCase()} — ${g.intent} — Led by ${g.leader}`, icon: '📝', tag: 'Content Gap', action: () => switchToTab('intel')});
+  });
+  // Tab navigation shortcuts
+  const tabs = [{name:'Mission Control',tab:'mission-control',icon:'🎯'},{name:'The Battleground',tab:'battleground',icon:'⚔️'},{name:'Radar',tab:'radar',icon:'📡'},{name:'Arsenal',tab:'arsenal',icon:'🛡️'},{name:'Intel',tab:'intel',icon:'📊'},{name:'Playbook',tab:'playbook',icon:'📚'}];
+  tabs.forEach(t => {
+    cmdSearchIndex.push({title: `Go to ${t.name}`, sub: 'Navigate to tab', icon: t.icon, tag: 'Nav', action: () => switchToTab(t.tab)});
+  });
+  // Special actions
+  cmdSearchIndex.push({title: 'Enter TV Mode', sub: 'Launch fullscreen presentation mode', icon: '📺', tag: 'Action', action: () => { closeCmdPalette(); enterTVMode(); }});
+  cmdSearchIndex.push({title: 'Quick Reference', sub: 'Keyboard shortcuts & abbreviations', icon: '❓', tag: 'Action', action: () => { closeCmdPalette(); showHelp(); }});
+  // Pricing
+  cmdSearchIndex.push({title: 'Pricing Calculator', sub: 'Compare Medcurity pricing vs competitors by tier', icon: '💰', tag: 'Arsenal', action: () => { switchToTab('arsenal'); setTimeout(() => document.getElementById('emp-tier')?.focus(), 300); }});
+  // Email templates
+  cmdSearchIndex.push({title: 'Post-Breach Email Template', sub: 'Generate outreach email for breached organization', icon: '✉️', tag: 'Arsenal', action: () => { switchToTab('arsenal'); }});
+  // ROI
+  cmdSearchIndex.push({title: 'ROI Calculator', sub: 'Cost of breach vs Medcurity investment', icon: '📈', tag: 'Arsenal', action: () => switchToTab('arsenal')});
+  // Discovery questions
+  cmdSearchIndex.push({title: 'Discovery Questions', sub: '8 questions for prospecting conversations', icon: '🔎', tag: 'Arsenal', action: () => switchToTab('arsenal')});
+  // Deal scorecard
+  cmdSearchIndex.push({title: 'Deal Qualification Scorecard', sub: 'Score a prospect to assess deal viability', icon: '📋', tag: 'Playbook', action: () => switchToTab('playbook')});
+}
+
+function openCmdPalette() {
+  document.getElementById('cmd-overlay').classList.add('active');
+  const input = document.getElementById('cmd-input');
+  input.value = '';
+  input.focus();
+  document.getElementById('cmd-results').innerHTML = '';
+  cmdSelectedIdx = -1;
+}
+
+function closeCmdPalette() {
+  document.getElementById('cmd-overlay').classList.remove('active');
+}
+
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+function searchCmd(query) {
+  const results = document.getElementById('cmd-results');
+  if (!query.trim()) { results.innerHTML = ''; cmdSelectedIdx = -1; return; }
+  const q = query.toLowerCase();
+  const matches = cmdSearchIndex.filter(item =>
+    item.title.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q) || item.tag.toLowerCase().includes(q)
+  ).slice(0, 12);
+
+  results.innerHTML = matches.map((m, i) => `
+    <div class="cmd-result${i === 0 ? ' selected' : ''}" data-idx="${i}" onclick="cmdSearchIndex._lastResults[${i}].action();closeCmdPalette()" onmouseenter="cmdSelectResult(${i})">
+      <div class="cmd-r-icon">${m.icon}</div>
+      <div class="cmd-r-body">
+        <div class="cmd-r-title">${highlightMatch(m.title, query)}</div>
+        <div class="cmd-r-sub">${highlightMatch(m.sub, query)}</div>
+      </div>
+      <span class="cmd-r-tag">${m.tag}</span>
+    </div>`).join('');
+
+  cmdSearchIndex._lastResults = matches;
+  cmdSelectedIdx = matches.length > 0 ? 0 : -1;
+}
+
+function cmdSelectResult(idx) {
+  document.querySelectorAll('.cmd-result').forEach((r, i) => r.classList.toggle('selected', i === idx));
+  cmdSelectedIdx = idx;
+}
+
+document.getElementById('cmd-input').addEventListener('input', (e) => searchCmd(e.target.value));
+document.getElementById('cmd-input').addEventListener('keydown', (e) => {
+  const results = document.querySelectorAll('.cmd-result');
+  if (e.key === 'ArrowDown') { e.preventDefault(); cmdSelectedIdx = Math.min(cmdSelectedIdx + 1, results.length - 1); cmdSelectResult(cmdSelectedIdx); results[cmdSelectedIdx]?.scrollIntoView({block:'nearest'}); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); cmdSelectedIdx = Math.max(cmdSelectedIdx - 1, 0); cmdSelectResult(cmdSelectedIdx); results[cmdSelectedIdx]?.scrollIntoView({block:'nearest'}); }
+  if (e.key === 'Enter' && cmdSelectedIdx >= 0 && cmdSearchIndex._lastResults) { cmdSearchIndex._lastResults[cmdSelectedIdx].action(); closeCmdPalette(); }
+  if (e.key === 'Escape') closeCmdPalette();
+});
+
+buildSearchIndex();
+
+// Override keyboard shortcuts to include Cmd+K
+const _origKeyHandler = window.onkeydown;
+window.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCmdPalette(); }
+  if (e.key === 'Escape' && document.getElementById('cmd-overlay').classList.contains('active')) { e.stopPropagation(); closeCmdPalette(); }
+}, true);
 
 </script>
 </body>
