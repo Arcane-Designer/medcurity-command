@@ -433,8 +433,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .sticky-bar .sb-cmd:hover{border-color:var(--border2);color:var(--text2)}
 
 /* ===== IMPROVED TAB TRANSITIONS ===== */
-.tab{display:none;opacity:0;transform:translateY(8px)}
-.tab.active{display:block;animation:tabFadeIn .35s ease forwards}
+.tab{display:none}
+.tab.active{display:block;animation:tabFadeIn .35s ease both}
 @keyframes tabFadeIn{from{opacity:0;transform:translateY(8px)};to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
