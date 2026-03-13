@@ -318,6 +318,20 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--text3)}
 
+/* ===== SIDEBAR SPECIAL ITEMS ===== */
+.sidebar-special{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s;border-left:3px solid transparent;text-decoration:none;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.sidebar-special:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.sidebar-special .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sidebar-divider{height:1px;background:var(--border);margin:8px 0}
+/* Initiatives strip */
+.initiatives-strip{padding:12px 20px;border-top:1px solid var(--border)}
+.initiatives-strip .init-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text3);margin-bottom:8px}
+.initiatives-strip .init-tags{display:flex;flex-wrap:wrap;gap:4px}
+.initiatives-strip .init-tag{font-size:9px;padding:3px 8px;border-radius:6px;font-weight:600;background:rgba(220,38,38,.06);color:var(--red);border:1px solid rgba(220,38,38,.1);transition:all .2s}
+.initiatives-strip .init-tag:hover{background:rgba(220,38,38,.12)}
+/* Every Minute Counts tagline */
+.emc-tagline{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);padding:0 20px 8px;opacity:.8}
+
 /* ===== TV MODE ===== */
 .tv-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);transition:all .2s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
 .tv-btn:hover{background:rgba(220,38,38,.06);color:var(--red)}
@@ -390,16 +404,30 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="sub">Command Center</div>
     </div>
   </div>
+  <div class="emc-tagline">Every Minute Counts</div>
   <div class="sidebar-nav">
+    <button class="sidebar-special" onclick="enterTVMode()"><div class="dot" style="background:var(--red);box-shadow:0 0 6px var(--red)"></div>📺 TV Mode</button>
+    <div class="sidebar-divider"></div>
+    <div class="nav-section">Navigation</div>
     <a class="nav-item active" data-tab="mission-control" onclick="switchTab(event)"><div class="dot" style="background:var(--red)"></div>Mission Control<div class="notification-bell" style="display:none" id="mc-bell">🔔<div class="notification-count" id="action-count">0</div></div></a>
     <a class="nav-item" data-tab="battleground" onclick="switchTab(event)"><div class="dot" style="background:var(--orange)"></div>The Battleground</a>
     <a class="nav-item" data-tab="radar" onclick="switchTab(event)"><div class="dot" style="background:var(--yellow)"></div>Radar<span class="badge" id="radar-badge">16</span></a>
     <a class="nav-item" data-tab="arsenal" onclick="switchTab(event)"><div class="dot" style="background:var(--green)"></div>Arsenal</a>
     <a class="nav-item" data-tab="intel" onclick="switchTab(event)"><div class="dot" style="background:var(--blue)"></div>Intel<span class="badge" id="intel-badge">15</span></a>
     <a class="nav-item" data-tab="playbook" onclick="switchTab(event)"><div class="dot" style="background:var(--purple)"></div>Playbook</a>
-    <div style="margin-top:auto;padding:8px 0;border-top:1px solid var(--border)">
-      <button class="tv-btn" onclick="enterTVMode()">📺 TV Mode</button>
-      <a class="tv-btn" onclick="showHelp()" href="javascript:void(0)" style="text-decoration:none">❓ Shortcuts</a>
+    <div class="sidebar-divider"></div>
+    <button class="sidebar-special" onclick="showHelp()"><div class="dot" style="background:var(--cyan)"></div>Quick Reference</button>
+    <div style="margin-top:auto">
+      <div class="initiatives-strip">
+        <div class="init-title">Our Initiatives</div>
+        <div class="init-tags">
+          <span class="init-tag">🚀 Trailblazing</span>
+          <span class="init-tag">🤝 Trust</span>
+          <span class="init-tag">🔍 Transparency</span>
+          <span class="init-tag">🏆 Teamwork</span>
+          <span class="init-tag">🎉 Fun</span>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -428,7 +456,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <!-- ==================== MISSION CONTROL ==================== -->
 <div class="tab active" id="mission-control">
   <div class="page-title">Mission Control</div>
-  <div class="page-sub">Your GTM intelligence at a glance. What changed, what matters, what to do next.</div>
+  <div class="page-sub">Your GTM intelligence at a glance. What changed, what matters, what to do next. <span style="color:var(--red);font-weight:700">Every minute counts.</span></div>
 
   <div class="stats-row">
     <div class="stat-card" onclick="switchToTab('radar')"><div class="stat-val red">10</div><div class="stat-lbl">Hot Leads (Breaches)</div></div>
@@ -747,7 +775,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <!-- Help Modal (hidden by default) -->
 <div id="help-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1001;align-items:center;justify-content:center">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;max-width:500px;color:var(--text)">
-    <h3 style="color:#fff;margin-bottom:16px;font-size:18px">Keyboard Shortcuts</h3>
+    <h3 style="color:#fff;margin-bottom:16px;font-size:18px">Quick Reference</h3>
     <ul style="list-style:none;font-size:12px;line-height:2">
       <li><strong>1-6</strong> — Jump to tabs (Mission Control, Battleground, Radar, Arsenal, Intel, Playbook)</li>
       <li><strong>/</strong> — Focus search bar</li>
@@ -1775,6 +1803,56 @@ function buildTVSlides() {
               <span class="fi-sev sev-${s.sev}" style="font-size:11px">${s.sev}</span>
             </div>
           </div>`).join('')}
+      </div>
+    </div>
+    <div class="tv-slide">
+      <div class="tv-slide-title">Quarterly Revenue Goal</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100% - 60px);gap:32px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;width:100%;max-width:900px">
+          <div class="tv-kpi" style="opacity:.5">
+            <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Q Target</div>
+            <div class="tv-kpi-val" style="color:var(--green)">—</div>
+            <div class="tv-kpi-lbl">Revenue Goal</div>
+          </div>
+          <div class="tv-kpi" style="opacity:.5">
+            <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Current</div>
+            <div class="tv-kpi-val" style="color:var(--yellow)">—</div>
+            <div class="tv-kpi-lbl">Closed Revenue</div>
+          </div>
+          <div class="tv-kpi" style="opacity:.5">
+            <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Remaining</div>
+            <div class="tv-kpi-val" style="color:var(--red)">—</div>
+            <div class="tv-kpi-lbl">Gap to Goal</div>
+          </div>
+        </div>
+        <div style="width:100%;max-width:900px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">
+            <span>Progress to Goal</span>
+            <span>—%</span>
+          </div>
+          <div style="width:100%;height:24px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+            <div style="width:0%;height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:12px;transition:width 1s ease"></div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:2px dashed var(--border2);border-radius:16px;padding:32px 48px;text-align:center;max-width:600px">
+          <div style="font-size:48px;margin-bottom:12px">🔗</div>
+          <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:8px">Coming Soon</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6">Connect to Salesforce or your CRM to display live quarterly revenue progress, pipeline value, and deal velocity.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;width:100%;max-width:900px">
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;opacity:.4">
+            <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Pipeline</div>
+            <div style="font-size:20px;font-weight:800;color:#fff">—</div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;opacity:.4">
+            <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Avg Deal Size</div>
+            <div style="font-size:20px;font-weight:800;color:#fff">—</div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;opacity:.4">
+            <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Win Rate</div>
+            <div style="font-size:20px;font-weight:800;color:#fff">—</div>
+          </div>
+        </div>
       </div>
     </div>`;
 
