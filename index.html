@@ -317,6 +317,66 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 ::-webkit-scrollbar-track{background:var(--surface)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--text3)}
+
+/* ===== TV MODE ===== */
+.tv-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);transition:all .2s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.tv-btn:hover{background:rgba(220,38,38,.06);color:var(--red)}
+.tv-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:9999;overflow:hidden}
+.tv-overlay.active{display:flex;flex-direction:column}
+.tv-header{display:flex;justify-content:space-between;align-items:center;padding:24px 40px;border-bottom:1px solid var(--border)}
+.tv-header .tv-logo{display:flex;align-items:center;gap:16px}
+.tv-header .tv-logo img{height:32px}
+.tv-header .tv-logo .tv-sub{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:2px}
+.tv-header .tv-clock{font-size:28px;font-weight:300;color:var(--text2);letter-spacing:2px}
+.tv-header .tv-exit{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.2);color:var(--red);padding:8px 20px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .2s}
+.tv-header .tv-exit:hover{background:rgba(220,38,38,.2)}
+.tv-body{flex:1;padding:40px;overflow:hidden;position:relative}
+.tv-slide{position:absolute;top:40px;left:40px;right:40px;bottom:40px;opacity:0;transform:scale(.98);transition:all .6s ease;pointer-events:none}
+.tv-slide.active{opacity:1;transform:scale(1);pointer-events:auto}
+.tv-slide .tv-slide-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);margin-bottom:24px}
+.tv-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px}
+.tv-kpi{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center}
+.tv-kpi .tv-kpi-val{font-size:56px;font-weight:900;color:#fff;line-height:1}
+.tv-kpi .tv-kpi-lbl{font-size:13px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:12px}
+.tv-breach-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-height:calc(100vh - 260px);overflow-y:auto}
+.tv-breach-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px}
+.tv-breach-card .tv-b-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.tv-breach-card .tv-b-loc{font-size:12px;color:var(--text3)}
+.tv-breach-card .tv-b-meta{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tv-breach-card .tv-b-tag{font-size:11px;padding:3px 10px;border-radius:6px;background:rgba(255,255,255,.05);color:var(--text2)}
+.tv-comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;max-height:calc(100vh - 260px);overflow-y:auto}
+.tv-comp-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.tv-comp-card .tv-c-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px}
+.tv-comp-card .tv-c-threat{font-size:11px;padding:4px 10px;border-radius:8px;font-weight:700;text-transform:uppercase;display:inline-block;margin-bottom:8px}
+.tv-comp-card .tv-c-quick{font-size:12px;color:var(--text2);line-height:1.6}
+.tv-progress{display:flex;gap:6px;justify-content:center;padding:16px 40px}
+.tv-dot{width:10px;height:10px;border-radius:50%;background:var(--border2);transition:all .3s;cursor:pointer}
+.tv-dot.active{background:var(--red);width:28px;border-radius:5px}
+
+/* ===== CROSS-LINK BUTTONS ===== */
+.xlink-btn{display:inline-flex;align-items:center;gap:4px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.15);color:var(--red);padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:10px;font-weight:600;transition:all .2s;text-decoration:none;margin-left:6px}
+.xlink-btn:hover{background:rgba(220,38,38,.15);transform:translateY(-1px)}
+
+/* ===== COLLAPSIBLE SECTIONS ===== */
+.section-hdr.collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
+.section-hdr.collapsible::after{content:'▾';font-size:14px;transition:transform .3s}
+.section-hdr.collapsible.collapsed::after{transform:rotate(-90deg)}
+.section-hdr.collapsible.collapsed + .collapsible-content{max-height:0;overflow:hidden;margin:0;padding:0;opacity:0;border:none}
+.collapsible-content{transition:all .4s ease;max-height:5000px;opacity:1}
+
+/* ===== ENHANCED HOVER & SPACING ===== */
+.comp-card{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.radar-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.arsenal-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.arsenal-card:hover{border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.persona-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.pb-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.pb-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.stat-card{transition:all .3s cubic-bezier(.4,0,.2,1)}
+.feed-item{transition:all .25s cubic-bezier(.4,0,.2,1)}
+.roi-card{transition:all .3s ease}
+.roi-card:hover{border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.pitch-box{transition:all .3s cubic-bezier(.4,0,.2,1)}
 </style>
 </head>
 <body>
@@ -337,14 +397,26 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <a class="nav-item" data-tab="arsenal" onclick="switchTab(event)"><div class="dot" style="background:var(--green)"></div>Arsenal</a>
     <a class="nav-item" data-tab="intel" onclick="switchTab(event)"><div class="dot" style="background:var(--blue)"></div>Intel<span class="badge" id="intel-badge">15</span></a>
     <a class="nav-item" data-tab="playbook" onclick="switchTab(event)"><div class="dot" style="background:var(--purple)"></div>Playbook</a>
-  </div>
-  <div class="sidebar-footer">
-    Next scan: <span class="update-time">Tue 7:00 AM</span><br>
-    Last updated: <span class="update-time" id="last-updated-date"></span><br>
-    <div class="last-scan-badge green" id="last-scan-badge">✓ v3 — 10 Full Personas</div>
-    <a class="help-link" onclick="showHelp()" href="javascript:void(0)">Need help?</a>
+    <div style="margin-top:auto;padding:8px 0;border-top:1px solid var(--border)">
+      <button class="tv-btn" onclick="enterTVMode()">📺 TV Mode</button>
+      <a class="tv-btn" onclick="showHelp()" href="javascript:void(0)" style="text-decoration:none">❓ Shortcuts</a>
+    </div>
   </div>
 </nav>
+
+<!-- TV Mode Overlay -->
+<div class="tv-overlay" id="tv-overlay">
+  <div class="tv-header">
+    <div class="tv-logo">
+      <img src="https://app.medcurity.com/images/icons/medcurity-logo-reversed-new.png" alt="Medcurity">
+      <span class="tv-sub">Command Center</span>
+    </div>
+    <div class="tv-clock" id="tv-clock"></div>
+    <button class="tv-exit" onclick="exitTVMode()">Exit TV Mode</button>
+  </div>
+  <div class="tv-body" id="tv-body"></div>
+  <div class="tv-progress" id="tv-progress"></div>
+</div>
 
 <div class="main">
 
@@ -392,8 +464,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <div class="card-grid" id="comp-grid"></div>
   <div id="comp-detail"></div>
 
-  <div class="section-hdr">Competitive Comparison Matrix</div>
-  <table class="comp-matrix">
+  <div class="section-hdr collapsible" onclick="this.classList.toggle('collapsed')">Competitive Comparison Matrix</div>
+  <div class="collapsible-content"><table class="comp-matrix">
     <tr>
       <th>Feature / Dimension</th>
       <th>Medcurity</th>
@@ -443,7 +515,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <td class="feature-name">Healthcare Expertise</td>
       <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td>Tech-focused</td><td>Tech-focused</td><td class="check">✓</td>
     </tr>
-  </table>
+  </table></div><!-- end collapsible-content for Matrix -->
 </div>
 
 <!-- ==================== RADAR ==================== -->
@@ -490,8 +562,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
-  <div class="section-hdr">ROI Calculator: Cost of Breach vs Medcurity Investment</div>
-  <div class="roi-grid">
+  <div class="section-hdr collapsible" onclick="this.classList.toggle('collapsed')">ROI Calculator: Cost of Breach vs Medcurity Investment</div>
+  <div class="collapsible-content"><div class="roi-grid">
     <div class="roi-card">
       <h4>Average HIPAA Breach Cost</h4>
       <div class="roi-stat">$4.88M</div>
@@ -506,8 +578,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
-  <div class="section-hdr">Discovery Questions for Prospecting</div>
-  <ul class="discovery-list">
+  </div><!-- end collapsible-content for ROI -->
+  <div class="section-hdr collapsible" onclick="this.classList.toggle('collapsed')">Discovery Questions for Prospecting</div>
+  <div class="collapsible-content"><ul class="discovery-list">
     <li>When was your last comprehensive HIPAA risk assessment? By internal team or external consultant?</li>
     <li>How are you currently managing and tracking remediation of identified vulnerabilities?</li>
     <li>Do you have documented policies covering all 18 HIPAA Security Rule categories?</li>
@@ -518,7 +591,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <li>Do you use any compliance/GRC platform today? What are the gaps?</li>
   </ul>
 
-  <div class="section-hdr">Email Template Generator</div>
+  </div><!-- end collapsible-content for Discovery -->
+  <div class="section-hdr collapsible" onclick="this.classList.toggle('collapsed')">Email Template Generator</div>
+  <div class="collapsible-content">
   <div class="arsenal-grid">
     <div class="arsenal-card">
       <h3>Generate Email</h3>
@@ -539,7 +614,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
-  <div class="section-hdr">60-Second Pitch Templates</div>
+  </div><!-- end collapsible-content for Email -->
+  <div class="section-hdr collapsible" onclick="this.classList.toggle('collapsed')">60-Second Pitch Templates</div>
+  <div class="collapsible-content">
   <div class="two-col-feed">
     <div class="pitch-box">
       <h4>Mid-Market (20+ employees)</h4>
@@ -552,6 +629,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <button class="copy-btn" onclick="copyText(this)">Copy to clipboard</button>
     </div>
   </div>
+  </div><!-- end collapsible-content for Pitch -->
 </div>
 
 <!-- ==================== INTEL ==================== -->
@@ -576,7 +654,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <button class="filter-btn" data-intent-filter="educational" onclick="filterGapTable(event)">Educational</button>
   </div>
   <table class="gap-table" id="gap-table">
-    <tr><th>Status</th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Way It Matters</th></tr>
+    <tr><th>Status</th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>
   </table>
 </div>
 
@@ -1355,7 +1433,7 @@ function buildGapTable() {
       <td>${g.leader}</td>
       <td>${g.why}</td>
     </tr>`).join('');
-  table.innerHTML = `<tr><th></th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Way It Matters</th></tr>${rows}`;
+  table.innerHTML = `<tr><th></th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>${rows}`;
 }
 
 function filterGapTable(e) {
@@ -1595,9 +1673,180 @@ buildPersonas();
 buildScorecard();
 showBuyingMap('small',document.querySelector('#buying-committee-section .filter-btn.active'));
 calcPricing();
-// Set last updated date
-const d = new Date(); const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-document.getElementById('last-updated-date').textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+// ===== TV MODE =====
+let tvInterval = null;
+let tvClockInterval = null;
+let tvCurrentSlide = 0;
+
+function enterTVMode() {
+  const overlay = document.getElementById('tv-overlay');
+  overlay.classList.add('active');
+  buildTVSlides();
+  updateTVClock();
+  tvClockInterval = setInterval(updateTVClock, 1000);
+  tvCurrentSlide = 0;
+  showTVSlide(0);
+  tvInterval = setInterval(() => {
+    tvCurrentSlide = (tvCurrentSlide + 1) % document.querySelectorAll('.tv-slide').length;
+    showTVSlide(tvCurrentSlide);
+  }, 8000);
+  document.addEventListener('keydown', tvKeyHandler);
+}
+
+function exitTVMode() {
+  document.getElementById('tv-overlay').classList.remove('active');
+  clearInterval(tvInterval);
+  clearInterval(tvClockInterval);
+  document.removeEventListener('keydown', tvKeyHandler);
+}
+
+function tvKeyHandler(e) {
+  if (e.key === 'Escape') exitTVMode();
+  if (e.key === 'ArrowRight') { tvCurrentSlide = (tvCurrentSlide + 1) % document.querySelectorAll('.tv-slide').length; showTVSlide(tvCurrentSlide); }
+  if (e.key === 'ArrowLeft') { const total = document.querySelectorAll('.tv-slide').length; tvCurrentSlide = (tvCurrentSlide - 1 + total) % total; showTVSlide(tvCurrentSlide); }
+}
+
+function updateTVClock() {
+  const now = new Date();
+  const h = now.getHours() % 12 || 12;
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mons = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('tv-clock').textContent = `${days[now.getDay()]} ${mons[now.getMonth()]} ${now.getDate()} — ${h}:${m} ${ampm}`;
+}
+
+function buildTVSlides() {
+  const body = document.getElementById('tv-body');
+  const b = COMMAND_DATA.breaches;
+  const hotBreaches = b.filter(x => x.sev === 'hot');
+  const c = COMMAND_DATA.competitors;
+  const signals = COMMAND_DATA.jobSignals;
+
+  body.innerHTML = `
+    <div class="tv-slide active">
+      <div class="tv-slide-title">Key Performance Indicators</div>
+      <div class="tv-kpi-grid">
+        <div class="tv-kpi"><div class="tv-kpi-val" style="color:var(--red)">${hotBreaches.length}</div><div class="tv-kpi-lbl">Hot Breach Leads</div></div>
+        <div class="tv-kpi"><div class="tv-kpi-val" style="color:var(--yellow)">${signals.length}</div><div class="tv-kpi-lbl">Hiring Signals</div></div>
+        <div class="tv-kpi"><div class="tv-kpi-val" style="color:var(--green)">3.6x</div><div class="tv-kpi-lbl">Price Advantage</div></div>
+        <div class="tv-kpi"><div class="tv-kpi-val" style="color:var(--blue)">${c.length}</div><div class="tv-kpi-lbl">Competitors Tracked</div></div>
+        <div class="tv-kpi"><div class="tv-kpi-val">${COMMAND_DATA.contentGaps.length}</div><div class="tv-kpi-lbl">Content Gaps</div></div>
+        <div class="tv-kpi"><div class="tv-kpi-val" style="color:var(--red)">$499</div><div class="tv-kpi-lbl">SPSRA / Year</div></div>
+      </div>
+    </div>
+    <div class="tv-slide">
+      <div class="tv-slide-title">Active Breach Alerts</div>
+      <div class="tv-breach-list">
+        ${b.slice(0,6).map(br => `
+          <div class="tv-breach-card" style="border-left:3px solid ${br.sev==='hot'?'var(--red)':br.sev==='warm'?'var(--yellow)':'var(--blue)'}">
+            <div class="tv-b-name">${br.name}</div>
+            <div class="tv-b-loc">${br.loc}</div>
+            <div class="tv-b-meta">
+              <span class="tv-b-tag">${br.affected} affected</span>
+              <span class="tv-b-tag">${br.type}</span>
+              <span class="fi-sev sev-${br.sev}" style="font-size:11px">${br.sev}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="tv-slide">
+      <div class="tv-slide-title">Competitive Landscape</div>
+      <div class="tv-comp-grid">
+        ${c.map(comp => `
+          <div class="tv-comp-card">
+            <div class="tv-c-name">${comp.name}</div>
+            <div class="tv-c-threat threat-pill ${comp.threat}">${comp.threat}</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:12px 0">
+              ${comp.stats.map(s => `<div style="background:var(--surface2);padding:8px;text-align:center"><div style="font-size:14px;font-weight:800;color:#fff">${s.v}</div><div style="font-size:9px;color:var(--text3);text-transform:uppercase;margin-top:2px">${s.l}</div></div>`).join('')}
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="tv-slide">
+      <div class="tv-slide-title">Hiring Signals</div>
+      <div class="tv-breach-list">
+        ${signals.map(s => `
+          <div class="tv-breach-card" style="border-left:3px solid var(--yellow)">
+            <div class="tv-b-name">${s.org}</div>
+            <div class="tv-b-loc">${s.loc}</div>
+            <div class="tv-b-meta">
+              <span class="tv-b-tag">${s.role}</span>
+              <span class="fi-sev sev-${s.sev}" style="font-size:11px">${s.sev}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  // Build progress dots
+  const slides = body.querySelectorAll('.tv-slide');
+  const progress = document.getElementById('tv-progress');
+  progress.innerHTML = Array.from(slides).map((_,i) => `<div class="tv-dot${i===0?' active':''}" onclick="showTVSlide(${i})"></div>`).join('');
+}
+
+function showTVSlide(idx) {
+  tvCurrentSlide = idx;
+  document.querySelectorAll('.tv-slide').forEach((s,i) => s.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tv-dot').forEach((d,i) => d.classList.toggle('active', i === idx));
+  // Reset auto-advance timer
+  clearInterval(tvInterval);
+  tvInterval = setInterval(() => {
+    tvCurrentSlide = (tvCurrentSlide + 1) % document.querySelectorAll('.tv-slide').length;
+    showTVSlide(tvCurrentSlide);
+  }, 8000);
+}
+
+// ===== CROSS-LINKING =====
+// Override buildRadar to add "Draft Email" cross-links
+const _origBuildRadar = buildRadar;
+// Already handled by existing "Draft Email" buttons in radar
+
+// Add cross-links to gap table rows
+const _origBuildGapTable = buildGapTable;
+buildGapTable = function() {
+  const table = document.getElementById('gap-table');
+  const rows = COMMAND_DATA.contentGaps.map(g => {
+    const compId = findCompetitorId(g.leader);
+    const xlinkHtml = compId ? `<button class="xlink-btn" onclick="event.stopPropagation();switchToTab('battleground');setTimeout(()=>toggleDetail('${compId}'),300)">View Battlecard</button>` : '';
+    return `<tr data-pri="${g.pri}" data-intent="${g.intent}">
+      <td><input type="checkbox" class="published-checkbox" onchange="updatePublishedCount()" /></td>
+      <td><span class="pri ${g.pri}">${g.pri.toUpperCase()}</span></td>
+      <td><strong>${g.topic}</strong></td>
+      <td>${g.intent}</td>
+      <td>${g.leader}${xlinkHtml}</td>
+      <td>${g.why}</td>
+    </tr>`;
+  }).join('');
+  table.innerHTML = `<tr><th></th><th>Pri</th><th>Topic / Target Keyword</th><th>Intent</th><th>Leader</th><th>Why It Matters</th></tr>${rows}`;
+};
+
+function findCompetitorId(leader) {
+  const map = {'Accountable HQ':'accountable','Compliancy Group':'compliancy','Vanta':'vanta','Drata':'drata','Intraprise Health':'intraprise','RSI Security':null,'HHS':null,'HIPAA Journal':null,'HHS, HIPAA Journal':null,'Censinet':null,'Minimal':null};
+  return map[leader] || null;
+}
+
+// Override persona detail to add cross-links to Arsenal
+const _origTogglePersona = togglePersona;
+togglePersona = function(id) {
+  _origTogglePersona(id);
+  // Add "View in Arsenal" button to objections tab
+  const detail = document.getElementById('persona-detail');
+  if (detail.dataset.open) {
+    const existingTabs = detail.querySelector('.pd-tabs');
+    if (existingTabs && !existingTabs.querySelector('.xlink-arsenal')) {
+      const link = document.createElement('div');
+      link.className = 'pd-tab xlink-arsenal';
+      link.style.cssText = 'background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.2);color:var(--green)';
+      link.textContent = 'Open Arsenal';
+      link.onclick = () => switchToTab('arsenal');
+      existingTabs.appendChild(link);
+    }
+  }
+};
+
+// Re-run builders with cross-links
+buildGapTable();
+
 </script>
 </body>
 </html>
